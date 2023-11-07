@@ -3,7 +3,7 @@ import "./header.css"
 import { Link } from "react-router-dom"
 
 import {Toc,Clear} from '@mui/icons-material';
-import Logo from './logo2.png'
+import Logo from './logo3.png'
 const Navbar = () => {
   const [Mobile, setMobile] = useState(false)
   return (

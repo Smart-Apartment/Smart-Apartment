@@ -5,17 +5,15 @@
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-  
       }
   
-  /* Styling for the steps */
   .StepLabel-label  {
     color:white;
-    
   }
-  
-  
-  /* Styling for the buttons */
+  .MuiStepLabel-labelContainer span {
+    font-family:Poppins;
+    font-size: small;
+}
   .button-container {
     display: flex;
     justify-content:space-evenly;
@@ -38,9 +36,32 @@
     background-color: black;
   }
   
+
   .ThankYouMessage {
     font-family: monospace;
     font-size: 24px;
     color: #007BFF;
   }
+  .camera-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 240px;
+    width: 320px;
+  }
+  /* .password-toggle {
+    background-color: #007BFF;
+    visibility: hidden;
+  }
   
+  /* Show the icon on hover */
+ .password-toggle:hover {
+  visibility: visible;
+} */
+.TextField-root input[type="password"]::-ms-reveal {
+visibility: hidden;
+}
+::-ms-reveal{
+  display: none;
+}

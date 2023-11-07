@@ -19,15 +19,16 @@ li {
 }
 .logo1 {
   font-size: 20px;
-  
+  color: whitesmoke;
 }
 .navbar {
   display: flex;
   justify-content: space-between; 
   align-items: center;
-  height: 10vh;
-  box-shadow: rgba(50, 50, 93, 0.23) 0px 30px 30px -20px;
-  background-color: white;
+  height: 12vh;
+  box-shadow: rgba(0, 0, 0, 0.416) 0px 30px 30px -20px;
+  background-color: darkblue;
+  
 }
 
 .logo-container {
@@ -36,11 +37,12 @@ li {
 }
 
 .logo {
-  width: 60px; 
-  height: 60px;
+  width: 90px; 
+  height: 90px;
   /* background-color: red; */
-  margin: 10px;
+  /* margin: 10px; */
   margin-right: 2px;
+  color: white;
 }
 .nav-links {
   display: flex;
@@ -49,11 +51,11 @@ li {
 }
 .nav-links li:hover{
   transform: scale(1.1);
-  color: darkblue;
+  color: whitesmoke;
 }
 
 .nav-links li {
-  color: black;
+  color: white;
   font-size: 20px;
   padding: 10px 20px;
   margin: 0 10px;

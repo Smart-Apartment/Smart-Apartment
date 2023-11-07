@@ -1,8 +1,10 @@
-import React, { useState ,useRef} from "react";
+import React, { useState ,useRef,useEffect} from "react";
 import { MuiTelInput } from 'mui-tel-input';
 import "./register.css";
-import {PersonOutlined,Cake, EmailOutlined, PasswordOutlined, BadgeOutlined, PhoneOutlined} from '@mui/icons-material';
+import {PersonOutlined,Cake, EmailOutlined, PasswordOutlined, BadgeOutlined, PhoneOutlined,VisibilityOutlined,VisibilityOffOutlined} from '@mui/icons-material';
 import InputAdornment from '@mui/material/InputAdornment';
+import PasswordChecklist from 'react-password-checklist';
+import IconButton from '@mui/material/IconButton';
 
 import {
   
@@ -22,6 +24,7 @@ import {
 } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
+ 
   button: {
     marginRight: theme.spacing(1),
   },
@@ -30,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
     notchedOutline: {
       px: 10,
     },
+    fontFamily:"Poppins",
+    fontSize:"14px"
   },
   root: {
     "& .MuiStepIcon-active": { color: "black" },
@@ -41,15 +46,14 @@ const useStyles = makeStyles((theme) => ({
 
 function getSteps() {
   return [
-    "Basic information",
+    "Basic Information",
     "Face",
-    "QR ",
   ];
 }
 
 
 const BasicForm = () => {
-  const { control,formState: { errors } } = useFormContext();
+  const { control,formState: { errors },setValue,getValues,setError,clearErrors } = useFormContext();
   const classes=useStyles();
   const error={
     fullName:"Full Name is Required",
@@ -60,8 +64,20 @@ const BasicForm = () => {
     password:"Password is Required",
     confirmPassword:"Passwords Should Match"
   }
- 
-  
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const validatePassword = (field) => {
+    const value = getValues(field);
+    if (value === '') {
+      setError(field, { type: 'required', message: `${field} is required` });
+    } else {
+      clearErrors(field);
+    }
+  };
   return (
     <>
 
@@ -78,6 +94,7 @@ const BasicForm = () => {
             label="Full Name"
             variant="outlined"
             fullWidth
+            placeholder="Enter Your Full Name"
             error={!!errors.fullName }
             inputRef={ref}
             helperText={errors.fullName && `${error.fullName}`}
@@ -126,7 +143,7 @@ const BasicForm = () => {
                 </InputAdornment>
               ),
               className: classes.textField,
-
+                
             }}
           />
           
@@ -171,9 +188,11 @@ const BasicForm = () => {
         name="phoneNumber"
         rules={{
           required:true,
+          
         }}
         render={({ field :{ref,...field}}) => (
           <MuiTelInput
+          
           id="phone-number"
           label="Phone Number" 
           variant="outlined"
@@ -191,7 +210,11 @@ const BasicForm = () => {
               </InputAdornment>
             ),
             className: classes.textField,
+          
 
+          }}
+          inputProps={{
+            maxLength: 15,
           }}
           defaultCountry="IN"
          />
@@ -202,6 +225,7 @@ const BasicForm = () => {
         name="aadharNumber"
         rules={{
           required:true,
+          
         }}
         render={({ field:{ref,...field} }) => (
           <TextField
@@ -210,11 +234,13 @@ const BasicForm = () => {
             variant="outlined"
             placeholder="Enter Your Aadhar Number"
             fullWidth
+            type="tel"
             margin="normal"
             error={!!errors.aadharNumber }
             inputRef={ref}
             helperText={errors.aadharNumber && `${error.aadharNumber}`}
             {...field}
+            
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -224,6 +250,9 @@ const BasicForm = () => {
               className: classes.textField,
 
             }}
+            inputProps={{
+              maxLength: 12,
+            }}
           />
         )}
       />
@@ -232,6 +261,7 @@ const BasicForm = () => {
         name="password"
         rules={{
           required:true,
+          
         }}
         render={({ field :{ref,...field}}) => (
           <TextField
@@ -239,23 +269,37 @@ const BasicForm = () => {
             label="Password"
             
             variant="outlined"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             placeholder="Password"
             fullWidth
             margin="normal"
             {...field}
+            error={!!errors.password}
+            helperText={errors.password?.message}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <PasswordOutlined />
                 </InputAdornment>
               ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={togglePasswordVisibility } className="password-toggle">
+                    {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                  </IconButton>
+                </InputAdornment>
+              ),
               className: classes.textField,
             
             }}
-            error={!!errors.password }
-            inputRef={ref}
-            helperText={errors.password && `${error.password}`}
+
+            onBlur={field.onBlur}
+              onChange={(e) => {
+                field.onChange(e);
+                // Manually trigger validation on change
+                validatePassword("password")
+              }}
+              
           />
         )}
       />
@@ -263,7 +307,7 @@ const BasicForm = () => {
         control={control}
         name="confirmPassword"
         rules={{
-          required:true,
+          required:"Required",
         }}
         render={({ field :{ref,...field}}) => (
           <TextField
@@ -284,73 +328,121 @@ const BasicForm = () => {
               className: classes.textField,
 
             }}
-            error={!!errors.confirmPassword}
-            inputRef={ref}
-            helperText={errors.confirmPassword && `${error.confirmPassword}`}
+            onBlur={field.onBlur}
+              onChange={(e) => {
+                field.onChange(e);
+                // Manually trigger validation on change
+                validatePassword("confirmPassword")
+              }}
             
           />
         )}
+      />
+      <PasswordChecklist
+          style={{
+            display:"grid",
+            gridTemplateColumns:"repeat(3, 2fr) ",
+            gridAutoRows:"60px",
+            fontSize:"8px",
+            paddingTop:"10px",
+            paddingLeft:"20px"
+          }}
+          iconSize={
+          "14px"
+          }
+          rules={['capital', 'match','specialChar', 'minLength', 'number']}
+          minLength={8}
+          value={getValues("password")}
+          valueAgain={getValues("confirmPassword")}
+          onChange={(isValid, errors) => {
+            if (!isValid) {
+              const errorMessages = errors.join(', ');
+              setValue('password', getValues('password'), {
+                shouldDirty: true,
+              });
+              setError('password', {
+                type: 'manual',
+                message:errorMessages,
+              });
+            } else {
+              clearErrors('password');
+            }
+          }}
+        />
+    </>
+  );
+};
+
+const CameraView = () => {
+  const videoRef = useRef(null);
+  let stream = null;
+
+  const startCamera = async () => {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (error) {
+      console.error("Error accessing camera:", error);
+    }
+  };
+
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+    }
+  };
+
+  useEffect(() => {
+    startCamera();
+
+    return () => {
+      stopCamera();
+    };
+  }, []);
+
+  return (
+    <div className="camera-container">
+    <div className="camera-view">
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        muted
+        width={320} 
+        height={240}
+      
+      />
+    </div>
+    </div>
+  );
+};
+
+const FaceForm = () => {
+  const { control } = useFormContext();
+
+  return (
+    <>
+      <Controller
+        
+        control={control}
+        name="cameraView"
+        render={({ field }) => <CameraView />}
       />
     </>
   );
 };
 
-// const CameraView = () => {
-//   const videoRef = useRef(null);
 
-//   const startCamera = async () => {
-//     try {
-//       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-//       if (videoRef.current) {
-//         videoRef.current.srcObject = stream;
-//       }
-//     } catch (error) {
-//       console.error("Error accessing camera:", error);
-//     }
-//   };
-
-//   React.useEffect(() => {
-//     startCamera();
-//   }, []);
-
+// const QRForm = () => {
+//   // const { control } = useFormContext();
 //   return (
-//     <div className="camera-view">
-//       <video
-//         ref={videoRef}
-//         autoPlay
-//         playsInline
-//         muted
-//         width={320} 
-//         height={240}
-      
-//       />
-//     </div>
+//     <>
+     
+//     </>
 //   );
 // };
-
-const FaceForm = () => {
-  // const { control } = useFormContext();
-
-  return (
-    <>
-      {/* <Controller
-        
-        control={control}
-        name="cameraView"
-        render={({ field }) => <CameraView />}
-      /> */}
-    </>
-  );
-};
-
-const QRForm = () => {
-  // const { control } = useFormContext();
-  return (
-    <>
-     
-    </>
-  );
-};
 
 function getStepContent(step) {
   switch (step) {
@@ -358,8 +450,7 @@ function getStepContent(step) {
       return <BasicForm />;
     case 1:
       return <FaceForm />;
-    case 2:
-      return <QRForm />;
+    
     default:
       return "unknown step";
   }
@@ -377,19 +468,24 @@ const RegisterScreen = () => {
       confirmPassword:"",
     },
   });
+  const {formState,setError} = useForm();
 
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
  const c=useStyles();
   const handleNext = (data) => {
+
     console.log(data);
-    if(data.password === data.confirmPassword && data.password!=null ){
-      console.log("Password matching");
-    }
-    else{
-      alert("Passwords Should Match!")
-      return;
-    }
+    // if(formState.isValid ){
+    //   console.log("Password matching");
+    // }
+    // else{
+    //   setError('password', {
+    //     type: 'manual',
+    //     message:"Password is Weak",
+    //   });
+    //   return;
+    // }
     if (activeStep === steps.length - 1) {
       fetch("https://jsonplaceholder.typicode.com/comments")
         .then((data) => data.json())
@@ -415,10 +511,10 @@ const RegisterScreen = () => {
     </header>
     <div className="Stepper-root">
       
-      <Stepper className={c.root} alternativeLabel activeStep={activeStep}>
+      <Stepper  className={c.root} alternativeLabel activeStep={activeStep}>
         {steps.map((step, index) => (
-          <Step key={index} >
-            <StepLabel   className="StepLabel-label" >{step}</StepLabel>
+          <Step  key={index} >
+            <StepLabel className="StepLabel-label" >{step}</StepLabel>
           </Step>
         ))}
       </Stepper>

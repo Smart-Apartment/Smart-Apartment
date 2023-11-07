@@ -1,6 +1,6 @@
-import { Register } from "./screens/Register";
-import { HomeScreen } from "./screens/HomeScreen"; 
-import { LoginScreen } from "./screens/LoginScreen";
+import { Register } from "./screens/Register/Register";
+import { HomeScreen } from "./screens/Home/HomeScreen"; 
+import { LoginScreen } from "./screens/Login/LoginScreen";
 import { BrowserRouter as Router, Route,Routes } from "react-router-dom";
 function App() {
   return (

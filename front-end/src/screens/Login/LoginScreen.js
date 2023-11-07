@@ -1,4 +1,4 @@
-import Navbar from "./Header";
+import Navbar from "../Header/Header";
 import Login from "./Login";
 import { CssBaseline, Container, Paper, Box } from "@material-ui/core";
 

@@ -11,7 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 
 function VisitorLogin() {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit ,formState:{errors}} = useForm();
   const classes = useStyles();
   const onSubmit = (data) => {
     console.log(data);
@@ -24,14 +24,17 @@ function VisitorLogin() {
         name="FullName"
         control={control}
         defaultValue=""
+        rules={{
+          required:true
+        }}
         className={classes.formControl}
-        render={({ field }) => (
+        render={({ field:{ref,...field} }) => (
           <TextField
             label="Full Name"
             variant="outlined"
             fullWidth
             margin="normal"
-            type="email"
+            type="text"
             placeholder="Full Name"
             {...field}
             InputProps={{
@@ -42,6 +45,8 @@ function VisitorLogin() {
               ),
 
             }}
+            error={!!errors.FullName}
+            helperText={errors.FullName && "Full Name is Required"}
               />
         )}
       />
@@ -50,7 +55,11 @@ function VisitorLogin() {
         name="phoneNumber"
         control={control}
         defaultValue=""
-        render={({ field }) => (
+        rules={{
+          required:true,
+          maxLength:12,
+        }}
+        render={({ field :{ref,...field}}) => (
           <TextField
             label="Phone Number"
             variant="outlined"
@@ -67,6 +76,8 @@ function VisitorLogin() {
               ),
 
             }}
+            error={!!errors.phoneNumber}
+            helperText={errors.phoneNumber && "Phone Number is Required"}
           />
         )}
       />
@@ -84,7 +95,7 @@ function VisitorLogin() {
 }
 
 function LoginForm() {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit ,formState:{errors}} = useForm();
   const classes = useStyles();
   const onSubmit = (data) => {
     console.log(data);
@@ -98,14 +109,17 @@ function LoginForm() {
         control={control}
         defaultValue=""
         className={classes.formControl}
-        render={({ field }) => (
+        rules={{
+          required:true,
+        }}
+        render={({ field :{ref,...field}}) => (
           <TextField
             label="Email"
             variant="outlined"
             fullWidth
             margin="normal"
             type="email"
-            placeholder="Enter your email"
+            placeholder="Enter your Email"
             {...field}
             InputProps={{
               startAdornment: (
@@ -115,6 +129,9 @@ function LoginForm() {
               ),
 
             }}
+            error={!!errors.email }
+            inputRef={ref}
+            helperText={errors.email && "Email Is Required"}
           />
         )}
       />
@@ -123,7 +140,10 @@ function LoginForm() {
         name="password"
         control={control}
         defaultValue=""
-        render={({ field }) => (
+        rules={{
+          required:true,
+        }}
+        render={({ field :{ref,...field}}) => (
           <TextField
             label="Password"
             variant="outlined"
@@ -131,7 +151,7 @@ function LoginForm() {
             margin="normal"
             type="password"
             
-            placeholder="Enter your password"
+            placeholder="Enter your Password"
             {...field}
             InputProps={{
               startAdornment: (
@@ -141,6 +161,9 @@ function LoginForm() {
               ),
 
             }}
+            error={!!errors.password }
+            inputRef={ref}
+            helperText={errors.password && "Password is Required"}
           />
         )}
       />
@@ -207,8 +230,10 @@ const Login = () => {
   return (
     <div className={classes.main}>
       <Container maxWidth="sm">
-        <Typography align="center" variant="h4">
-          Sign in as a Staff!
+        <Typography align="center" >
+          <h1>
+          Sign In 
+          </h1>
         </Typography>
         <Typography
           className={classes.top}
@@ -216,7 +241,7 @@ const Login = () => {
           align="center"
           sx={{ mt: 5 }}
         >
-          Enter your username and password
+          Enter your Username and Password
         </Typography>
 
         <Container >
@@ -236,7 +261,7 @@ const Login = () => {
                 >
                   OR
                 </Typography>
-                <Typography>Login with facial recognition </Typography>
+                <Button>Login with Facial Recognition </Button>
               </Container>
             </TabPanel>
             <TabPanel value="visitor">
