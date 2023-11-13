@@ -1,11 +1,12 @@
-import React, { useState ,useRef,useEffect} from "react";
+import React, { useState} from "react";
 import { MuiTelInput } from 'mui-tel-input';
 import "./register.css";
-import {PersonOutlined,Cake, EmailOutlined, PasswordOutlined, BadgeOutlined, PhoneOutlined,VisibilityOutlined,VisibilityOffOutlined} from '@mui/icons-material';
+import {PersonOutlined,Cake, EmailOutlined, PasswordOutlined, BadgeOutlined, PhoneOutlined,VisibilityOutlined,VisibilityOffOutlined, Padding, HomeMaxOutlined, HouseOutlined} from '@mui/icons-material';
 import InputAdornment from '@mui/material/InputAdornment';
 import PasswordChecklist from 'react-password-checklist';
 import IconButton from '@mui/material/IconButton';
-
+import FaceForm from "./FaceForm";
+import { Link } from "react-router-dom";
 import {
   
   Typography,
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiStepIcon-active": { color: "black" },
     "& .MuiStepIcon-completed": { color: "green" },
-    "& .Mui-disabled .MuiStepIcon-root": { color: "grey" }
+    "& .Mui-disabled .MuiStepIcon-root": { color: "grey" },
   },
   
 }));
@@ -62,9 +63,11 @@ const BasicForm = () => {
     phoneNumber:"Phone Number is Required",
     aadharNumber:"Aadhar Number is Required",
     password:"Password is Required",
-    confirmPassword:"Passwords Should Match"
+    confirmPassword:"Passwords Should Match",
+    flatno:"Flat Number Is Required"
   }
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordFieldFocused, setPasswordFieldFocused] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -182,7 +185,38 @@ const BasicForm = () => {
           />
         )}
       />
+      <Controller
+        control={control}
+        name="flatno"
+        rules={{
+          required:true,
+        }}
+        render={({ field:{ref,...field} }) => (
+          <TextField
+            id="flatno"
+            label="Flat-No"
+            variant="outlined"
+            error={!!errors.flatno }
+            inputRef={ref}
+            helperText={errors.flatno && `${error.flatno}`}
+            placeholder="Enter Your Falt Number"
+            fullWidth
+            margin="normal"
+            {...field}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <HouseOutlined />
+                </InputAdornment>
+              ),
+              className: classes.textField,
+            
+            }}
+            
 
+          />
+        )}
+      />
       <Controller
         control={control}
         name="phoneNumber"
@@ -192,16 +226,17 @@ const BasicForm = () => {
         }}
         render={({ field :{ref,...field}}) => (
           <MuiTelInput
-          
-          id="phone-number"
+          className="telinput"
           label="Phone Number" 
           variant="outlined"
           placeholder="Enter Your Phone Number"
           fullWidth
           margin="normal"
+          disableDropdown
+          disableFormatting
           error={!!errors.phoneNumber }
           inputRef={ref}
-          helperText={errors.phoneNumber && `${error.phoneNumber}`}
+          helperText={errors.phoneNumber?.message}
           {...field}
           InputProps={{
             startAdornment: (
@@ -210,13 +245,14 @@ const BasicForm = () => {
               </InputAdornment>
             ),
             className: classes.textField,
-          
 
           }}
           inputProps={{
-            maxLength: 15,
+            maxLength:15,
+            style: { padding:'18.5px 0px' }
           }}
           defaultCountry="IN"
+          
          />
         )}
       />
@@ -267,7 +303,6 @@ const BasicForm = () => {
           <TextField
             id="password"
             label="Password"
-            
             variant="outlined"
             type={showPassword ? 'text' : 'password'}
             placeholder="Password"
@@ -293,13 +328,13 @@ const BasicForm = () => {
             
             }}
 
-            onBlur={field.onBlur}
+            onBlur={() => setPasswordFieldFocused(false)}
               onChange={(e) => {
                 field.onChange(e);
-                // Manually trigger validation on change
                 validatePassword("password")
               }}
-              
+              onFocus={() => setPasswordFieldFocused(true)}            
+
           />
         )}
       />
@@ -331,21 +366,23 @@ const BasicForm = () => {
             onBlur={field.onBlur}
               onChange={(e) => {
                 field.onChange(e);
-                // Manually trigger validation on change
                 validatePassword("confirmPassword")
               }}
-            
           />
         )}
       />
-      <PasswordChecklist
+      {passwordFieldFocused && (<PasswordChecklist
+        className="password-checklist-container"
+
           style={{
             display:"grid",
-            gridTemplateColumns:"repeat(3, 2fr) ",
+            gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
             gridAutoRows:"60px",
             fontSize:"8px",
             paddingTop:"10px",
-            paddingLeft:"20px"
+            paddingLeft:"20px",
+           
+        
           }}
           iconSize={
           "14px"
@@ -368,81 +405,14 @@ const BasicForm = () => {
               clearErrors('password');
             }
           }}
-        />
-    </>
-  );
-};
-
-const CameraView = () => {
-  const videoRef = useRef(null);
-  let stream = null;
-
-  const startCamera = async () => {
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    } catch (error) {
-      console.error("Error accessing camera:", error);
-    }
-  };
-
-  const stopCamera = () => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-    }
-  };
-
-  useEffect(() => {
-    startCamera();
-
-    return () => {
-      stopCamera();
-    };
-  }, []);
-
-  return (
-    <div className="camera-container">
-    <div className="camera-view">
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        muted
-        width={320} 
-        height={240}
       
-      />
-    </div>
-    </div>
-  );
-};
-
-const FaceForm = () => {
-  const { control } = useFormContext();
-
-  return (
-    <>
-      <Controller
-        
-        control={control}
-        name="cameraView"
-        render={({ field }) => <CameraView />}
-      />
+        />
+      )}
     </>
   );
 };
 
 
-// const QRForm = () => {
-//   // const { control } = useFormContext();
-//   return (
-//     <>
-     
-//     </>
-//   );
-// };
 
 function getStepContent(step) {
   switch (step) {
@@ -462,30 +432,26 @@ const RegisterScreen = () => {
       fullName: "",
       Dob:"",
       emailAddress: "",
+      flatno:"",
       aadharNumber:"",
-      phoneNumber: "",
+      phoneNumber:'',
       password:"",
       confirmPassword:"",
     },
   });
-  const {formState,setError} = useForm();
-
+const {setError,formState}=useForm();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
  const c=useStyles();
   const handleNext = (data) => {
-
+    if (activeStep === 0 && data.password !== data.confirmPassword) {
+      setError('confirmPassword', {
+        type: 'manual',
+        message: 'Passwords do not match',
+      });
+      return; 
+    }
     console.log(data);
-    // if(formState.isValid ){
-    //   console.log("Password matching");
-    // }
-    // else{
-    //   setError('password', {
-    //     type: 'manual',
-    //     message:"Password is Weak",
-    //   });
-    //   return;
-    // }
     if (activeStep === steps.length - 1) {
       fetch("https://jsonplaceholder.typicode.com/comments")
         .then((data) => data.json())
@@ -520,10 +486,17 @@ const RegisterScreen = () => {
       </Stepper>
 
       {activeStep === steps.length ? (
-        <Typography variant="h3" align="center" className="ThankYouMessage">
+        <>
+        <Typography variant="h4" align="center" color="textPrimary" className="ThankYouMessage">
           Registered Successfully!
-          <Button>Click here to Login</Button>
+          
         </Typography>
+        <div style={{display:'flex',alignItems:"center",justifyContent:'center'}}>
+        <Link to='/login' className='login'>
+            <Button variant="outlined" style={{backgroundColor:"black",color:"white",marginTop:'20px'}}>Click Here To Login</Button>
+          </Link>
+          </div>
+        </>
       ) : (
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleNext)}>

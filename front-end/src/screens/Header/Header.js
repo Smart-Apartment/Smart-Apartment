@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState,useEffect } from "react"
 import "./header.css"
 import { Link } from "react-router-dom"
 
@@ -6,6 +6,23 @@ import {Toc,Clear} from '@mui/icons-material';
 import Logo from './logo3.png'
 const Navbar = () => {
   const [Mobile, setMobile] = useState(false)
+  const [forceRender, setForceRender] = useState(false);
+
+useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth > 768) {
+      setMobile(false);
+    }
+    setForceRender((prev) => !prev); // toggle the dummy state
+  };
+
+  window.addEventListener("resize", handleResize);
+
+  return () => {
+    window.removeEventListener("resize", handleResize);
+  };
+}, [forceRender]); // include forceRender in the dependency array
+
   return (
     <>
     <div className="header-container">
@@ -28,9 +45,7 @@ const Navbar = () => {
           <Link to='/register' className='register'>
             <li>SignUp</li>
           </Link>
-          {/* <Link to='/contact' className='home'>
-            <li>contact</li>
-          </Link> */}
+         
         </ul>
         
         <button className='mobile-menu-icon' onClick={() => setMobile(!Mobile)}>

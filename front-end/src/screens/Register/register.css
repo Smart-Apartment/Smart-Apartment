@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline+Text:wght@300&family=DM+Sans:opsz,wght@9..40,200&display=swap');
 
+.telinput{
+ text-align: left;
 
+}
 .Stepper-root {
     background-color: #ffffff;
     padding: 20px;
@@ -50,18 +53,24 @@
     height: 240px;
     width: 320px;
   }
-  /* .password-toggle {
-    background-color: #007BFF;
-    visibility: hidden;
-  }
-  
-  /* Show the icon on hover */
- .password-toggle:hover {
-  visibility: visible;
-} */
+
+ 
 .TextField-root input[type="password"]::-ms-reveal {
 visibility: hidden;
 }
 ::-ms-reveal{
   display: none;
+}
+
+@media (max-width: 768px) {
+  .Stepper-root {
+    overflow-y:auto; 
+    max-height: 500px; 
+  }
+  
+  .button-container {
+    flex-direction: column;
+    gap: 15px;
+    
+  }
 }

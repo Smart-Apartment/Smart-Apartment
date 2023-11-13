@@ -1,20 +1,21 @@
-import React, { useState } from "react";
-
+import React, { useContext, useState } from "react";
+import Container from "@mui/material/Container";
+import { useNavigate } from "react-router-dom";
 import {
-  Container,
+  
   TextField,
   Typography,
   Button,
   Box,
-} from "@material-ui/core";
-import { Controller, useForm, useFormContext } from "react-hook-form";
+} from "@mui/material";
+import { Controller, useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/styles";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { EmailOutlined, PasswordOutlined } from "@mui/icons-material";
-
+import { EmailOutlined, PasswordOutlined, Person2Outlined } from "@mui/icons-material";
+import { AuthContext, useAuth } from "./AuthContext";
 import InputAdornment from "@mui/material/InputAdornment";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     notchedOutline: {
       px: 10,
     },
-
     fontFamily: "Poppins",
     fontSize: "14px",
   },
@@ -153,11 +153,14 @@ const useStyles = makeStyles((theme) => ({
 
 let Data = {
   15: ["Ajay", "Kannan"],
-  16: ["saravana", "kunji"],
+  16: ["saravana"],
   68: ["arun", "surendar"],
 };
 
 function LoginForm() {
+  const {  handleLogin ,userIsLoggedIn} = useContext(AuthContext);
+
+  const navigate=useNavigate();
   const {
     control,
     handleSubmit,
@@ -167,11 +170,14 @@ function LoginForm() {
   const [flatUser, setFlatUser] = useState([]);
   const classes = useStyles();
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data.name);
+   if( handleLogin(data)){
+    
+    navigate('/visitor  ')
+   }
     // Handle form submission here
   };
 
-  // Define a function to fetch data based on the flat number input
   const fetchData = async (flatNumber) => {
     //     // You can make your API request here and update the data accordingly
     // const response = await fetch(`your-api-url/${flatNumber}`);
@@ -188,7 +194,6 @@ function LoginForm() {
     const flatNumber = e.target.value;
     fetchData(flatNumber);
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.formControl}>
       <Controller
@@ -216,13 +221,14 @@ function LoginForm() {
               className: classes.textField,
             }}
             inputRef={ref}
-            helperText={errors.email && "Email Is Required"}
+            error={!!errors.flatno}
+            helperText={errors.flatno && "Flat Number Is Required"}
             onChange={handleFlatNumberChange}
           />
         )}
       />
 
-      <Controller
+<Controller
         name="name"
         control={control}
         defaultValue=""
@@ -230,14 +236,13 @@ function LoginForm() {
           required: true,
         }}
         render={({ field: { ref, ...field } }) => (
-          <FormControl
-            fullWidth
-            error={!!errors.name}
-            inputRef={ref}
-            helperText={errors.name && "Name is Required"}
-          >
-            <InputLabel id="demo-simple-select-helper-label">Name</InputLabel>
-            <Select {...field} style={{ backgroundColor: "whitesmoke" }}>
+          <FormControl>
+            <InputLabel shrink id="demo-simple-select-helper-label">Name</InputLabel>
+            <Select notched={true} label="Name" variant="outlined" {...field} style={{ backgroundColor: "whitesmoke" }} startAdornment={
+              <InputAdornment position="start">
+              <Person2Outlined />
+            </InputAdornment>
+            }>
               <MenuItem value="">
                 <em>Choose the Name</em>
               </MenuItem>
@@ -451,9 +456,7 @@ const Login = () => {
   return (
     <div className={classes.main}>
       <Container maxWidth="sm">
-        <Typography align="center">
-          <h1>Sign In</h1>
-        </Typography>
+        <h1 style={{textAlign:"center"}}>Sign In</h1>
         <Typography
           className={classes.top}
           variant="h5"
