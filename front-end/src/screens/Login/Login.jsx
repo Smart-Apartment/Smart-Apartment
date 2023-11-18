@@ -1,20 +1,15 @@
 import React, { useContext, useState } from "react";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
-import {
-  
-  TextField,
-  Typography,
-  Button,
-  Box,
-} from "@mui/material";
+import { TextField, Typography, Button, Box } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/styles";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { EmailOutlined, PasswordOutlined, Person2Outlined } from "@mui/icons-material";
+import MapsHomeWorkOutlinedIcon from "@mui/icons-material/MapsHomeWorkOutlined";
+import { PasswordOutlined, Person2Outlined } from "@mui/icons-material";
 import { AuthContext, useAuth } from "./AuthContext";
 import InputAdornment from "@mui/material/InputAdornment";
 
@@ -64,93 +59,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// function VisitorLogin() {
-//   const {
-//     control,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm();
-//   const classes = useStyles();
-//   const onSubmit = (data) => {
-//     console.log(data);
-//     // Handle form submission here
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)}>
-//       <Controller
-//         name="FullName"
-//         control={control}
-//         defaultValue=""
-//         rules={{
-//           required: true,
-//         }}
-//         render={({ field: { ref, ...field } }) => (
-//           <TextField
-//             label="Full Name"
-//             variant="outlined"
-//             fullWidth
-//             margin="normal"
-//             type="text"
-//             placeholder="Full Name"
-//             {...field}
-//             InputProps={{
-//               startAdornment: (
-//                 <InputAdornment position="start">
-//                   <PersonOutlined />
-//                 </InputAdornment>
-//               ),
-//               className: classes.textField,
-//             }}
-//             error={!!errors.FullName}
-//             helperText={errors.FullName && "Full Name is Required"}
-//           />
-//         )}
-//       />
-
-//       <Controller
-//         name="phoneNumber"
-//         control={control}
-//         defaultValue=""
-//         rules={{
-//           required: true,
-//           maxLength: 12,
-//         }}
-//         render={({ field: { ref, ...field } }) => (
-//           <TextField
-//             label="Phone Number"
-//             variant="outlined"
-//             fullWidth
-//             margin="normal"
-//             type="number"
-//             placeholder="Phone Number"
-//             {...field}
-//             InputProps={{
-//               startAdornment: (
-//                 <InputAdornment position="start">
-//                   <PhoneOutlined />
-//                 </InputAdornment>
-//               ),
-//               className: classes.textField,
-//             }}
-//             error={!!errors.phoneNumber}
-//             helperText={errors.phoneNumber && "Phone Number is Required"}
-//           />
-//         )}
-//       />
-
-//       <Button
-//         className={classes.loginBtn}
-//         variant="contained"
-//         type="submit"
-//         color="primary"
-//       >
-//         Next
-//       </Button>
-//     </form>
-//   );
-// }
-
 let Data = {
   15: ["Ajay", "Kannan"],
   16: ["saravana"],
@@ -158,9 +66,9 @@ let Data = {
 };
 
 function LoginForm() {
-  const {  handleLogin ,userIsLoggedIn} = useContext(AuthContext);
+  const { handleLogin, userIsLoggedIn } = useContext(AuthContext);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -171,10 +79,9 @@ function LoginForm() {
   const classes = useStyles();
   const onSubmit = (data) => {
     console.log(data.name);
-   if( handleLogin(data)){
-    
-    navigate('/visitor  ')
-   }
+    if (handleLogin(data)) {
+      navigate("/visitor  ");
+    }
     // Handle form submission here
   };
 
@@ -215,7 +122,7 @@ function LoginForm() {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <EmailOutlined />
+                  <MapsHomeWorkOutlinedIcon />
                 </InputAdornment>
               ),
               className: classes.textField,
@@ -228,7 +135,7 @@ function LoginForm() {
         )}
       />
 
-<Controller
+      <Controller
         name="name"
         control={control}
         defaultValue=""
@@ -237,12 +144,21 @@ function LoginForm() {
         }}
         render={({ field: { ref, ...field } }) => (
           <FormControl>
-            <InputLabel shrink id="demo-simple-select-helper-label">Name</InputLabel>
-            <Select notched={true} label="Name" variant="outlined" {...field} style={{ backgroundColor: "whitesmoke" }} startAdornment={
-              <InputAdornment position="start">
-              <Person2Outlined />
-            </InputAdornment>
-            }>
+            <InputLabel shrink id="demo-simple-select-helper-label">
+              Name
+            </InputLabel>
+            <Select
+              notched={true}
+              label="Name"
+              variant="outlined"
+              {...field}
+              style={{ backgroundColor: "whitesmoke" }}
+              startAdornment={
+                <InputAdornment position="start">
+                  <Person2Outlined />
+                </InputAdornment>
+              }
+            >
               <MenuItem value="">
                 <em>Choose the Name</em>
               </MenuItem>
@@ -456,7 +372,7 @@ const Login = () => {
   return (
     <div className={classes.main}>
       <Container maxWidth="sm">
-        <h1 style={{textAlign:"center"}}>Sign In</h1>
+        <h1 style={{ textAlign: "center" }}>Sign In</h1>
         <Typography
           className={classes.top}
           variant="h5"

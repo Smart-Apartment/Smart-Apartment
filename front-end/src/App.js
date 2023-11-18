@@ -10,52 +10,77 @@ import { SidebarContext } from "./screens/Visitor/SidebarContext";
 import { useState } from "react";
 import { LoginScreen } from "./screens/Login/LoginScreen.js";
 import { AuthProvider, useAuth } from "./screens/Login/AuthContext.js";
-
+import VisitorLogin from "./screens/Login/VisitorLogin.js";
 function App() {
   const [menuCollapse, setMenuCollapse] = useState(false);
   // const {userIsLoggedIn} =useAuth();
   return (
     <>
-    <SidebarContext.Provider value={{menuCollapse,setMenuCollapse }}>
-
-    <Router>
-      <AuthProvider>
-     
-      <Routes>
-          <Route path="/" element={
-            <>
-          <Navbar/>
-          <HomeScreen/>
-          </>}></Route>
-          <Route path="/register" element={
-          <>
-          <Navbar/>
-          <Register/>
-          </>}/>
-          <Route path="/login" element={
-          <>
-          <Navbar/>
-          <LoginScreen/>
-          </>}/>
-      </Routes>
-
-          
+      <SidebarContext.Provider value={{ menuCollapse, setMenuCollapse }}>
+        <Router>
+          <AuthProvider>
             <Routes>
-              <Route path="/visitor" element={
-              <><Sidebar/>
-              <Test />
-              </>}/>
-              <Route path="/profile" element={<><Sidebar/>
-              <Test1 />
-              </>}/>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Navbar />
+                    <HomeScreen />
+                  </>
+                }
+              ></Route>
+              <Route
+                path="/register"
+                element={
+                  <>
+                    <Navbar />
+                    <Register />
+                  </>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <>
+                    <Navbar />
+                    <LoginScreen />
+                  </>
+                }
+              />
+              <Route
+                path="/visitorLogin"
+                element={
+                  <>
+                    <Navbar />
+                    <VisitorLogin />
+                  </>
+                }
+              />
             </Routes>
-          
-       </AuthProvider>
-
-    </Router>
-    </SidebarContext.Provider>
+            <Routes>
+              <Route
+                path="/visitor"
+                element={
+                  <>
+                    <Sidebar />
+                    <Test />
+                  </>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <>
+                    <Sidebar />
+                    <Test1 />
+                  </>
+                }
+              />
+            </Routes>
+          </AuthProvider>
+        </Router>
+      </SidebarContext.Provider>
     </>
-
   );
 }
 

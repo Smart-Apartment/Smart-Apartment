@@ -44,11 +44,7 @@ const Sidebar = () => {
             )}
           </div>
           <div className="closemenu" onClick={menuIconClick}>
-            {menuCollapse ? (
-              <Toc />
-            ) : (
-              <Clear />
-            )}
+            {menuCollapse ? <Toc /> : <Clear />}
           </div>
         </SidebarHeader>
 
@@ -81,4 +77,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
