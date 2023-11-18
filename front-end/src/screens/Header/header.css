@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+li {
+  list-style-type: none;
+}
+.header-container{
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+.logo1 {
+  font-size: 20px;
+  color: whitesmoke;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  height: 12vh;
+  box-shadow: rgba(0, 0, 0, 0.416) 0px 30px 30px -20px;
+  background-color: rgb(13, 13, 58);
+  
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 60px; 
+  height: 60px;
+  /* background-color: red; */
+  /* margin: 10px; */
+  margin-left: 5px;
+  color: white;
+}
+.nav-links {
+  display: flex;
+  justify-content: flex-end;
+  width: 75%;
+}
+.nav-links li:hover{
+  transform: scale(1.1);
+  color: whitesmoke;
+}
+
+.nav-links li {
+  color: white;
+  font-size: 20px;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.hero {
+  text-align: center;
+  margin-top: 15%;
+}
+.hero h1 {
+  text-align: center;
+  font-size: 80px;
+}
+.mobile-menu-icon {
+  display: none;
+}
+button {
+  border: none;
+  text-decoration: none;
+  font-size: 20px;
+  background: none;
+}
+@media (max-width: 768px) {
+  
+  .nav-links {
+    display: none;
+
+  }
+  
+  .nav-links-mobile {
+    position: fixed;
+    display: block;
+    list-style: none;
+    box-shadow: rgba(50, 50, 93, 0.23) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    left: 0;
+    top: 12%;
+    transition: all 0.5s ease-in-out;
+    width: 100%;
+    background-color: rgb(0,0,62);
+  }
+  .nav-links-mobile  li {
+    padding: 32px;
+    width: 100%;
+    transition: all 0.5s ease-in-out;
+    text-align: center;
+    font-size: large;
+    font-family: Poppins;
+    color: white;
+  }
+  .nav-links-mobile li:hover{
+    color: blue;
+  }
+  .mobile-menu-icon {
+    position: relative;
+    display: block;
+    right: 20px;
+    cursor: pointer;
+    color: white;
+  }
+  .hero h1 {
+    font-size: 50px;
+  }
+}

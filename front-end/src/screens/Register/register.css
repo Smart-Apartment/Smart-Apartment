@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline+Text:wght@300&family=DM+Sans:opsz,wght@9..40,200&display=swap');
+
+.telinput{
+ text-align: left;
+
+}
+.Stepper-root {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+      }
+  
+  .StepLabel-label  {
+    color:white;
+  }
+  .MuiStepLabel-labelContainer span {
+    font-family:Poppins;
+    font-size: small;
+}
+  .button-container {
+    display: flex;
+    justify-content:space-evenly;
+    margin-top: 20px; 
+  }
+  Button{
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+  }
+  .button {
+    background-color: #464242;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: black;
+  }
+  
+
+  .ThankYouMessage {
+    font-family: monospace;
+    font-size: 24px;
+    color: #007BFF;
+  }
+  .camera-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 240px;
+    width: 320px;
+  }
+
+ 
+.TextField-root input[type="password"]::-ms-reveal {
+visibility: hidden;
+}
+::-ms-reveal{
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .Stepper-root {
+    overflow-y:auto; 
+    max-height: 500px; 
+  }
+  
+  .button-container {
+    flex-direction: column;
+    gap: 15px;
+    
+  }
+}

@@ -7,7 +7,6 @@
     <img src="https://images.pexels.com/photos/324629/pexels-photo-324629.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" width="400px" height="200px"/>
     <h2>Under the Guidance of <br>Dr.Deivamani M</h2>
     <h4>Contributors</h4>
-    <span>Saravana Raju R| </span>
     <span>| Ajay Kannan | </span>
     <span>Mohammed Hamdhan | </span>
     <span>Guru Vikram | </span>
