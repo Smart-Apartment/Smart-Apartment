@@ -229,6 +229,7 @@ function VisitorLogin() {
         defaultValue=""
         render={({ field: { ref, ...field } }) => (
           <TextField
+            id="Purpose"
             label="Purpose of visit"
             variant="outlined"
             fullWidth
