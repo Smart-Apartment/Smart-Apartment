@@ -13,8 +13,8 @@ gray_image2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 faces1 = face_cascade.detectMultiScale(gray_image1, scaleFactor=1.1, minNeighbors=5)
 faces2 = face_cascade.detectMultiScale(gray_image2, scaleFactor=1.1, minNeighbors=5)
 
-training_data = []
-labels = []
+training_data = [faces1]
+labels = [1]
 
 for (x, y, w, h) in faces1:
     face_roi = gray_image1[y:y+h, x:x+w]

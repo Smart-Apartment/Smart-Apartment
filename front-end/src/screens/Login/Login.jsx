@@ -1,18 +1,25 @@
 import React, { useContext, useState } from "react";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
-import { TextField, Typography, Button, Box } from "@mui/material";
+import {
+  
+  TextField,
+  Typography,
+  Button,
+  Box,
+} from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/styles";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import MapsHomeWorkOutlinedIcon from "@mui/icons-material/MapsHomeWorkOutlined";
-import { PasswordOutlined, Person2Outlined } from "@mui/icons-material";
+import { MapsHomeWorkOutlined, PasswordOutlined, Person2Outlined } from "@mui/icons-material";
 import { AuthContext, useAuth } from "./AuthContext";
 import InputAdornment from "@mui/material/InputAdornment";
-
+import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 const useStyles = makeStyles((theme) => ({
   main: {
     display: "flex",
@@ -59,47 +66,62 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let Data = {
-  15: ["Ajay", "Kannan"],
-  16: ["saravana"],
-  68: ["arun", "surendar"],
-};
 
-function LoginForm() {
-  const { handleLogin, userIsLoggedIn } = useContext(AuthContext);
 
-  const navigate = useNavigate();
+function LoginForm(props) {
+  const {  handleLogin ,userIsLoggedIn} = useContext(AuthContext);
+
+  const navigate=useNavigate();
   const {
     control,
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm();
   const [flatUser, setFlatUser] = useState([]);
   const classes = useStyles();
   const onSubmit = (data) => {
     console.log(data.name);
-    if (handleLogin(data)) {
-      navigate("/visitor  ");
-    }
+   if( handleLogin(data)){
+    
+    navigate('/visitor  ')
+   }
+   else {
+    reset();
+    props.handleOpen();
+  }
     // Handle form submission here
   };
 
-  const fetchData = async (flatNumber) => {
-    //     // You can make your API request here and update the data accordingly
-    // const response = await fetch(`your-api-url/${flatNumber}`);
-    // const data = await response.json();
-
-    // Update the form data with the fetched data
-    setValue("flatno", flatNumber);
-    if (Data[flatNumber]) setFlatUser(Data[flatNumber]);
-    else setFlatUser([]);
-  };
+  
 
   // Handle text input change and trigger the data fetch
   const handleFlatNumberChange = (e) => {
     const flatNumber = e.target.value;
-    fetchData(flatNumber);
+    setValue("flatno", flatNumber);
+  };
+  const getFlatMember = async (e) => {
+    console.log(e.target.value);
+    await axios({
+      // Endpoint to send files
+      url: "https://testingml.ajaykannanceg20.repl.co/flatmember",
+      method: "POST",
+      // Attaching the form data
+      data: { flatNo: e.target.value },
+    })
+      .then((res) => {
+        console.log(res.data.status);
+        if (res.data.status == "ok") {
+          setFlatUser(res.data.member);
+        } else {
+          reset();
+          props.handleOpen();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.formControl}>
@@ -122,7 +144,7 @@ function LoginForm() {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <MapsHomeWorkOutlinedIcon />
+                  <MapsHomeWorkOutlined />
                 </InputAdornment>
               ),
               className: classes.textField,
@@ -131,11 +153,13 @@ function LoginForm() {
             error={!!errors.flatno}
             helperText={errors.flatno && "Flat Number Is Required"}
             onChange={handleFlatNumberChange}
+            onBlur={getFlatMember}
+
           />
         )}
       />
 
-      <Controller
+<Controller
         name="name"
         control={control}
         defaultValue=""
@@ -144,26 +168,17 @@ function LoginForm() {
         }}
         render={({ field: { ref, ...field } }) => (
           <FormControl>
-            <InputLabel shrink id="demo-simple-select-helper-label">
-              Name
-            </InputLabel>
-            <Select
-              notched={true}
-              label="Name"
-              variant="outlined"
-              {...field}
-              style={{ backgroundColor: "whitesmoke" }}
-              startAdornment={
-                <InputAdornment position="start">
-                  <Person2Outlined />
-                </InputAdornment>
-              }
-            >
+            <InputLabel shrink id="demo-simple-select-helper-label">Name</InputLabel>
+            <Select notched={true} label="Name" variant="outlined" {...field} style={{ backgroundColor: "whitesmoke" }} startAdornment={
+              <InputAdornment position="start">
+              <Person2Outlined />
+            </InputAdornment>
+            }>
               <MenuItem value="">
                 <em>Choose the Name</em>
               </MenuItem>
-              {flatUser.map((names) => (
-                <MenuItem key={names} value={names}>
+              {flatUser.map((names,index) => (
+                <MenuItem key={index} value={names}>
                   {names}
                 </MenuItem>
               ))}
@@ -368,11 +383,26 @@ function LoginForm() {
 
 const Login = () => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+
+  const { vertical, horizontal } = {
+    vertical: "top",
+    horizontal: "right",
+  };
+  const handleClose = () => {
+    console.log("came close");
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    console.log("came here ");
+    setOpen(true);
+  };
 
   return (
     <div className={classes.main}>
       <Container maxWidth="sm">
-        <h1 style={{ textAlign: "center" }}>Sign In</h1>
+        <h1 style={{textAlign:"center"}}>Sign In</h1>
         <Typography
           className={classes.top}
           variant="h5"
@@ -383,9 +413,18 @@ const Login = () => {
         </Typography>
 
         <Container disableGutters maxWidth={false} className={classes.root}>
-          <LoginForm />
+          <LoginForm handleOpen={handleOpen}/>
         </Container>
       </Container>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleClose} severity="error">
+          Invaild Data
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

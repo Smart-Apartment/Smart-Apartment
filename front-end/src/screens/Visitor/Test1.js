@@ -17,7 +17,7 @@ const Test1 = () => {
   const { menuCollapse } = useContext(SidebarContext);
 
   return (
-    <div className={`${menuCollapse ? 'main-open' : 'main-collapsed'}`} style={{marginTop:'20px',zIndex:"1000"}}>
+    <div className={`${menuCollapse ? 'main-open' : 'main-collapsed'}`} style={{marginTop:'20px'}}>
       <Header1 user={user}/>
       <Profile user={user} />
     </div>

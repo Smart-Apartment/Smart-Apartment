@@ -17,8 +17,11 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Container,
+  CssBaseline
 } from '@material-ui/core';
 import QRCode from 'react-qr-code'; 
+
 const Profile = ({ user }) => {
   const [profileImage, setProfileImage] = useState(null);
   const [numFamilyMembers, setNumFamilyMembers] = useState(0);
@@ -39,8 +42,10 @@ const Profile = ({ user }) => {
     }
   };
 
+
+
   const handleAddFamilyMembers = () => {
-    const newFamilyMembers = Array.from({ length: numFamilyMembers }, () => ({}));
+    const newFamilyMembers = Array.from({ length: numFamilyMembers }, () => ({ editable: true }));
     setFamilyMembers(newFamilyMembers);
   };
 
@@ -49,6 +54,20 @@ const Profile = ({ user }) => {
     newFamilyMembers[index][field] = value;
     setFamilyMembers(newFamilyMembers);
   };
+
+  const handleSave = (index) => {
+      const newFamilyMembers = [...familyMembers];
+      newFamilyMembers[index].editable = false;
+      setFamilyMembers(newFamilyMembers);    
+  };
+
+  const handleEdit = (index) => {
+    const newFamilyMembers = [...familyMembers];
+    newFamilyMembers[index].editable = true;
+    setFamilyMembers(newFamilyMembers);
+  };
+
+
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -65,8 +84,9 @@ const Profile = ({ user }) => {
     setShowQR(false);
   };
   return (
-    <div>
-      <Paper elevation={0} style={{ padding: '30px', maxWidth: '600px', margin: 'auto'  }}>
+    <Container style={{paddingTop:"50px"}} component="main" maxWidth="lg">
+      <CssBaseline />
+      <Paper elevation={5} style={{ padding: '30px', maxWidth: '600px', margin: 'auto' ,backgroundColor:"white" }}>
         <Grid container spacing={3} justifyContent="center" alignItems="center">
           <Grid item xs={12} style={{display:'flex',alignItems:"center",justifyContent:"center"}}>
             <input
@@ -159,49 +179,92 @@ const Profile = ({ user }) => {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            <Tabs value={activeTab} onChange={handleTabChange} centered>
+            <Tabs value={activeTab} onChange={handleTabChange} selectionFollowsFocus variant='scrollable'>
               {familyMembers.map((_, index) => (
-                <Tab style={{color:'rgb(0,0,62)'}} key={index} label={`Member ${index + 1}`} />
+                <Tab style={{color:'rgb(0,0,62)'}}  key={index} label={`Member ${index + 1}`} />
               ))}
             </Tabs>
             {familyMembers.map((member, index) => (
-              <TabPanel  key={index} value={activeTab} index={index}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} style={{textAlign:"left"}}>
-                    <TextField
-                    variant='outlined'
-                      fullWidth
-                      label={`Name ${index + 1}`}
-                      value={member.name || ''}
-                      onChange={(e) => handleFamilyMemberChange(index, 'name', e.target.value)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} style={{textAlign:"right"}}>
-                    <TextField
-                      variant='outlined'
+      <TabPanel key={index} value={activeTab} index={index}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} style={{ textAlign: "left" }}>
+            <TextField
+              variant='outlined'
+              fullWidth
+              label={`Name ${index + 1}`}
+              value={member.name || ''}
+              onChange={(e) => handleFamilyMemberChange(index, 'name', e.target.value)}
+              InputProps={{
+                readOnly: !member.editable,
+              }}
+              
+            />
+          </Grid>
+          <Grid item xs={12} style={{ textAlign: "right" }}>
+            <TextField
+              variant='outlined'
+              fullWidth
+              label={`Age ${index + 1}`}
+              value={member.age || ''}
+              type='number'
+              onChange={(e) => handleFamilyMemberChange(index, 'age', e.target.value)}
+              InputProps={{
+                readOnly: !member.editable,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ textAlign: "left" }}>
+            <TextField
+              variant='outlined'
+              fullWidth
+              label={`Password ${index + 1}`}
+              value={member.password || ''}
+              type='password'
+              onChange={(e) => handleFamilyMemberChange(index, 'password', e.target.value)}
+              InputProps={{
+                readOnly: !member.editable,
+              }}
+            />
+          </Grid>
+  
+  
+          <Grid item xs={2}>
+            <Button
+              variant="contained"
+              style={{backgroundColor: !member.editable ? 'gray' : 'black', color: 'white' }}
+              className='button'
+              onClick={()=> handleSave(index)}
+              disabled={!member.editable}
 
-                      fullWidth
-                      label={`Age ${index + 1}`}
-                      value={member.age || ''}
-                      onChange={(e) => handleFamilyMemberChange(index, 'age', e.target.value)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} style={{textAlign:"left"}}>
-                    <TextField
-                      variant='outlined'
-                      fullWidth
-                      label={`Aadhar ${index + 1}`}
-                      value={member.aadhar || ''}
-                      onChange={(e) => handleFamilyMemberChange(index, 'aadhar', e.target.value)}
-                    />
-                  </Grid>
+            >
+              Save
+            </Button>
+          </Grid>
+          <Grid item xs={2}>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: member.editable ? 'gray' : 'black',
+                color: 'white',
+                
+              }}
+              className='button'
+              onClick={()=> handleEdit(index)}
+              disabled={member.editable}
+            >
+              Edit
+            </Button>
+          </Grid>
                 </Grid>
+                
               </TabPanel>
             ))}
+            
           </Grid>
+          
         </Grid>
       </Paper>
-    </div>
+    </Container>
   );
 };
 
