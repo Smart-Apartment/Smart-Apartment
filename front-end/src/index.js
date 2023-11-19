@@ -3,11 +3,9 @@ import React from 'react';
 import App from './App'
 import { AuthProvider } from "./screens/Login/AuthContext";
 ReactDOM.render(
-    <React.StrictMode>
       <AuthProvider>
       <App />
-      </AuthProvider>
-    </React.StrictMode>,
+      </AuthProvider>,
     document.getElementById("root")
   );
 

@@ -150,7 +150,8 @@ function VisitorLogin() {
               className: classes.textField,
             }}
             inputProps={{
-              maxLength: 15,
+              maxLength:15,
+              style: { padding:'18.5px 0px' }
             }}
             defaultCountry="IN"
           />
@@ -229,7 +230,6 @@ function VisitorLogin() {
         defaultValue=""
         render={({ field: { ref, ...field } }) => (
           <TextField
-            id="Purpose"
             label="Purpose of visit"
             variant="outlined"
             fullWidth
