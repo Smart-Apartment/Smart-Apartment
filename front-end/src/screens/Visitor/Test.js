@@ -14,8 +14,9 @@ export default function Test(){
       };
     return(
         <>
-        <Header1 user={user}/>
+        
         <div className={`${menuCollapse ? 'main-open' : 'main-collapsed'}` }style={{marginTop:"50px",color:"black",zIndex:"0"}}>
+        <Header1 user={user}/>
         <p>
         Dashboard Here        
         </p>

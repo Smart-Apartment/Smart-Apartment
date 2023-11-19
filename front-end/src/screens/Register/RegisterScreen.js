@@ -1,7 +1,7 @@
 import React, { useState} from "react";
 import { MuiTelInput } from 'mui-tel-input';
 import "./register.css";
-import {PersonOutlined,Cake, EmailOutlined, PasswordOutlined, BadgeOutlined, PhoneOutlined,VisibilityOutlined,VisibilityOffOutlined, Padding, HomeMaxOutlined, HouseOutlined} from '@mui/icons-material';
+import {PersonOutlined,Cake, EmailOutlined, PasswordOutlined, BadgeOutlined, PhoneOutlined,VisibilityOutlined,VisibilityOffOutlined, Padding, HomeMaxOutlined, HouseOutlined, MapsHomeWorkOutlined, Person2Outlined} from '@mui/icons-material';
 import InputAdornment from '@mui/material/InputAdornment';
 import PasswordChecklist from 'react-password-checklist';
 import IconButton from '@mui/material/IconButton';
@@ -53,11 +53,13 @@ function getSteps() {
 }
 
 
-const BasicForm = () => {
+const BasicForm = ({handleValidationChange}) => {
   const { control,formState: { errors },setValue,getValues,setError,clearErrors } = useFormContext();
   const classes=useStyles();
   const error={
     fullName:"Full Name is Required",
+    userName:"UserName is Required",
+
     dob:"Date Of Birth is Required",
     email:"Email Id is Required",
     phoneNumber:"Phone Number is Required",
@@ -68,6 +70,7 @@ const BasicForm = () => {
   }
   const [showPassword, setShowPassword] = useState(false);
   const [passwordFieldFocused, setPasswordFieldFocused] = useState(false);
+  const[valid,setValid]=useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -154,6 +157,39 @@ const BasicForm = () => {
       />
       <Controller
         control={control}
+        name="userName"
+        rules={{
+          required:true,
+        }}
+        render={({ field:{ref,...field} }) => (
+          <TextField
+            
+            id="username"
+            label="User Name"
+            variant="outlined"
+            fullWidth
+            placeholder="Enter Your User Name"
+            error={!!errors.userName }
+            inputRef={ref}
+            helperText={errors.userName && `${error.userName}`}
+            margin="normal"
+            {...field}
+
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Person2Outlined />
+                </InputAdornment>
+              ),
+              className: classes.textField,
+
+            }}
+
+            />
+        )}
+      />
+      <Controller
+        control={control}
         name="emailAddress"
         rules={{
           required:true,
@@ -194,19 +230,19 @@ const BasicForm = () => {
         render={({ field:{ref,...field} }) => (
           <TextField
             id="flatno"
-            label="Flat-No"
+            label="Flat No"
             variant="outlined"
             error={!!errors.flatno }
             inputRef={ref}
             helperText={errors.flatno && `${error.flatno}`}
-            placeholder="Enter Your Falt Number"
+            placeholder="Enter Your Flat Number"
             fullWidth
             margin="normal"
             {...field}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <HouseOutlined />
+                  <MapsHomeWorkOutlined />
                 </InputAdornment>
               ),
               className: classes.textField,
@@ -363,15 +399,18 @@ const BasicForm = () => {
               className: classes.textField,
 
             }}
-            onBlur={field.onBlur}
+            onBlur={() => setPasswordFieldFocused(false)}
               onChange={(e) => {
                 field.onChange(e);
                 validatePassword("confirmPassword")
               }}
+              onFocus={() => setPasswordFieldFocused(true)}            
+
           />
         )}
       />
-      {passwordFieldFocused && (<PasswordChecklist
+      {passwordFieldFocused && 
+      (<PasswordChecklist
         className="password-checklist-container"
 
           style={{
@@ -392,17 +431,10 @@ const BasicForm = () => {
           value={getValues("password")}
           valueAgain={getValues("confirmPassword")}
           onChange={(isValid, errors) => {
-            if (!isValid) {
-              const errorMessages = errors.join(', ');
-              setValue('password', getValues('password'), {
-                shouldDirty: true,
-              });
-              setError('password', {
-                type: 'manual',
-                message:errorMessages,
-              });
-            } else {
-              clearErrors('password');
+            if (isValid) {
+              setValid(true);
+              console.log("Valid");
+              handleValidationChange(true); 
             }
           }}
       
@@ -414,10 +446,10 @@ const BasicForm = () => {
 
 
 
-function getStepContent(step) {
+function getStepContent(step,handleValidationChange) {
   switch (step) {
     case 0:
-      return <BasicForm />;
+      return <BasicForm handleValidationChange={handleValidationChange}/>;
     case 1:
       return <FaceForm />;
     
@@ -439,18 +471,17 @@ const RegisterScreen = () => {
       confirmPassword:"",
     },
   });
-const {setError,formState}=useForm();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
  const c=useStyles();
+ const [valid, setValid] = useState(false); 
+
+  const handleValidationChange = (valid) => {
+    setValid(valid);
+  };
   const handleNext = (data) => {
-    if (activeStep === 0 && data.password !== data.confirmPassword) {
-      setError('confirmPassword', {
-        type: 'manual',
-        message: 'Passwords do not match',
-      });
-      return; 
-    }
+    if (valid ) {
+      
     console.log(data);
     if (activeStep === steps.length - 1) {
       fetch("https://jsonplaceholder.typicode.com/comments")
@@ -462,6 +493,7 @@ const {setError,formState}=useForm();
     } else {
       setActiveStep(activeStep + 1);
     }
+  }
   };
 
   const handleBack = () => {
@@ -500,7 +532,7 @@ const {setError,formState}=useForm();
       ) : (
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleNext)}>
-            {getStepContent(activeStep)}
+            {getStepContent(activeStep,handleValidationChange)}
             <div className="button-container">
             <Button
               className={`button ${activeStep === 0 ? 'hidden' : ''}`} 
