@@ -36,7 +36,6 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
-import CameraView from "./FaceForm";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -434,13 +433,15 @@ const BasicForm = ({ handleValidationChange }) => {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <BasicForm handleValidationChange={handleValidationChange}/>;
+      return <BasicForm handleValidationChange={handleValidationChange} />;
     case 1:
-      return  <FaceForm
-      onCaptureImage={handleCaptureImage}
-      onResetCapture={handleResetCapture}
-    />;
-    
+      return (
+        <FaceForm
+          onCaptureImage={handleCaptureImage}
+          onResetCapture={handleResetCapture}
+        />
+      );
+
     default:
       return "unknown step";
   }
@@ -462,29 +463,21 @@ const RegisterScreen = () => {
   });
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
- const c=useStyles();
- const [valid, setValid] = useState(false); 
- const [capturedImage, setCapturedImage] = useState(null);
-
- const handleCaptureImage = (imageData) => {
-   setCapturedImage(imageData);
- };
-
- const handleResetCapture = () => {
-   setCapturedImage(null);
- };
-
-  const handleValidationChange = (valid) => {
-    setValid(valid);
-  };
+  const c = useStyles();
   const handleNext = (data) => {
-    if (valid ) {
-    console.log(userDetails);
+    if (activeStep === 0 && data.password !== data.confirmPassword) {
+      setError("confirmPassword", {
+        type: "manual",
+        message: "Passwords do not match",
+      });
+      return;
+    }
+    console.log(data);
     if (activeStep === steps.length - 1) {
       fetch("https://jsonplaceholder.typicode.com/comments")
         .then((data) => data.json())
         .then((res) => {
-          console.log(capturedImage);
+          console.log(res);
           setActiveStep(activeStep + 1);
         });
     } else {
