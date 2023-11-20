@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from model.registration_model import Registration
 from model.login_model import LOGIN
 import bcrypt
-
+from ..faceRecognition.face import imageFeature
+import gridfs
 
 from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
@@ -19,20 +20,15 @@ except DuplicateKeyError as e:
 
 @app.post("/user/register")
 def home(user:Registration):
-
+    image=gridfs.GridFS(db,"register")
+    features=imageFeature(user.image)
+    with open(user.image,"rb") as imageData:
+        data=imageData.read()
+    imageId=image.put(data,collection="images")
     if(user.password == user.confirmpassword):
         try:
             hashed=bcrypt.hashpw(user.password.encode("UTF-8"),bcrypt.gensalt())
             user.password=hashed
-            user_data={
-                    "full_name" : user.full_name,
-                    "flat_no":user.flat_no,
-                    "dob":user.dob,
-                    "aadhar_number":user.aadhar_number,
-                    "email":user.email,
-                    "password":user.password,
-                    "user_name":user.user_name
-            }
             db.register.insert_one({
                 "full_name": user.full_name,
                 "flat_no": user.flat_no,
@@ -40,15 +36,17 @@ def home(user:Registration):
                 "aadhar_number": user.aadhar_number,
                 "email": user.email,
                 "password": user.password,
-                "user_name":user.user_name
+                "user_name":user.user_name,
+                "image":imageId
             })
-            return user_data ,200
+            return "Success" ,200
         except:
             return "User Name Already Exists",500
     
 @app.get("/user/login/{flat_no}")
 async def return_name(flat_no:int):
     user=register.find_one({"flat_no" : flat_no},{"_id":0})
+    
     return user
 
 
