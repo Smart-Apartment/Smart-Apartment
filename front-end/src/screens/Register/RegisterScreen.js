@@ -23,6 +23,7 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
+import CameraView from "./FaceForm";
 
 const useStyles = makeStyles((theme) => ({
  
@@ -448,10 +449,10 @@ const BasicForm = ({handleValidationChange}) => {
 
 function getStepContent(step,handleValidationChange,handleCaptureImage,handleResetCapture) {
   switch (step) {
-    case 0:
-      return <BasicForm handleValidationChange={handleValidationChange}/>;
+   case 0:
+     return <BasicForm handleValidationChange={handleValidationChange}/>;
     case 1:
-      return  <FaceForm
+      return  <CameraView
       onCaptureImage={handleCaptureImage}
       onResetCapture={handleResetCapture}
     />;
@@ -483,6 +484,7 @@ const RegisterScreen = () => {
 
  const handleCaptureImage = (imageData) => {
    setCapturedImage(imageData);
+   console.log("From Register Screen",imageData);
  };
 
  const handleResetCapture = () => {
@@ -494,12 +496,12 @@ const RegisterScreen = () => {
   };
   const handleNext = (data) => {
     if (valid ) {
-    console.log(userDetails);
+    console.log(data);
     if (activeStep === steps.length - 1) {
       fetch("https://jsonplaceholder.typicode.com/comments")
         .then((data) => data.json())
         .then((res) => {
-          console.log(res);
+          console.log(capturedImage);
           setActiveStep(activeStep + 1);
         });
     } else {
