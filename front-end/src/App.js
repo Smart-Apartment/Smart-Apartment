@@ -11,6 +11,7 @@ import { useState } from "react";
 import { LoginScreen } from "./screens/Login/LoginScreen.js";
 import { AuthProvider, useAuth } from "./screens/Login/AuthContext.js";
 import VisitorLogin from "./screens/Login/VisitorLogin.js";
+import Admin from "./features/Admin/home/home.js";
 function App() {
   const [menuCollapse, setMenuCollapse] = useState(false);
   // const {userIsLoggedIn} =useAuth();
@@ -58,6 +59,7 @@ function App() {
               />
             </Routes>
             <Routes>
+              <Route path="/admin" element={<Admin />} />
               <Route
                 path="/visitor"
                 element={

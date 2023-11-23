@@ -1,0 +1,140 @@
+const style = {
+  parent: {
+    width: "100%",
+    overflow: "hidden",
+    height: "100%",
+    display: "flex",
+    backgroundColor: "rgba(0,0,0,0.7)",
+    userSelect: "none",
+  },
+  smallDashParent: {
+    width: "40%",
+    margin: "10px",
+    height: "47%",
+    display: "flex",
+    flexShrink: 0,
+    flexDirection: "column",
+    alignItems: "center",
+    "@media(max-width:800px)": {
+      flexDirection: "row",
+      height: "20%",
+      gap: "10px",
+      alignItems: "flex-start",
+      justifyContent: "center",
+      width: "90%",
+    },
+    "@media(max-width:700px)": {
+      width: "100%",
+    },
+  },
+  dashboard: {
+    overflowY: "auto",
+    overflowX: "hidden",
+    width: "80%",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
+    "@media(max-width:800px)": {
+      width: "60%",
+      justifyContent: "center",
+    },
+    "@media(max-width:700px)": {
+      marginTop: "20px",
+      width: "100%",
+    },
+    "&::-webkit-scrollbar": {
+      backgroundColor: "rgba(0,0,0,0.7)",
+      borderRadius: "10px",
+      padding: "5px",
+      width: "5px",
+    },
+    "&::-webkit-scrollbar-track": {
+      borderRadius: "10px",
+      backgroundColor: "rgba(0,0,0,0.7)",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      margin: "0 2px",
+      backgroundColor: "ORANGE",
+      borderRadius: "10px",
+    },
+  },
+  smallDash: {
+    padding: "10px 10px",
+    color: "white",
+    flexShrink: 0,
+    width: "100%",
+    margin: "5px 0",
+    borderRadius: "10px",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    height: "50%",
+    backgroundColor: "#000",
+    "@media(max-width:800px)": {
+      width: "48%",
+      height: "100%",
+    },
+  },
+  span: {
+    display: "block",
+    fontSize: "1rem",
+    fontWeight: 500,
+    color: "#fff",
+  },
+  count: {
+    color: "orange",
+    fontSize: "2rem",
+    fontWeight: 800,
+  },
+  largeDash: {
+    marginTop: "20px",
+    width: "96%",
+    padding: "20px",
+    overflowY: "auto",
+    height: "41%",
+    borderRadius: "10px",
+    backgroundColor: "#000",
+  },
+  mediumDash: {
+    marginTop: "20px",
+    padding: "15px",
+    width: "50%",
+    height: "47%",
+    borderRadius: "10px",
+    backgroundColor: "#000",
+    "@media(max-width:800px)": {
+      width: "96%",
+    },
+  },
+  graph: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    width: "100%",
+    height: "70%",
+    overflowX: "auto",
+    "&::-webkit-scrollbar": {
+      backgroundColor: "rgba(255,255,255,1)",
+      borderRadius: "10px",
+      padding: "5px",
+      height: "10px",
+    },
+    "&::-webkit-scrollbar-track": {
+      borderRadius: "10px",
+      backgroundColor: "rgba(255,255,255)",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      margin: "0 2px",
+      height: "5px",
+      backgroundColor: "rgba(0,0,0,0.5)",
+    },
+  },
+  visible: {
+    display: "contents",
+  },
+  hide: {
+    display: "none",
+  },
+};
+
+export default style;
