@@ -37,51 +37,56 @@ const CameraView = ({ onCaptureImage, onResetCapture }) => {
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
 
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-    const imageDataURL = canvas.toDataURL('image/png');
+    const imageDataURL = canvas.toDataURL('image/jpeg');
     if(imageDataURL){
       setCapturedImage(imageDataURL);
       onCaptureImage(imageDataURL);
+      stopCamera();
     }
 
     setFaceDetected(true);
-    stopCamera();
   };
 
   const detectFace = async () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    if(video){
+    if (!video || !canvas) {
+    return;
+  }
     const displaySize = { width: video.width, height: video.height };
     
     const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
 
     detections.forEach((detection) => {
+
       if (detection.score >= 0.8) {
         console.log('Face detected with accuracy above 0.8:', detection);
         setFaceDetected(true);
         captureImage();
       } 
+     
     });
 
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
     faceapi.draw.drawDetections(canvas, resizedDetections)
-  }
+  
   };
 
   const recaptureImage = () => {
+    console.log("Recapturing");
     startCamera();
     setCapturedImage(null);
     setFaceDetected(false);
     onResetCapture();
+    
   };
-
   useEffect(() => {
     startCamera();
 
     const intervalId = setInterval(() => {
       detectFace();
-    }, 100);
+    }, 1000);
 
     return () => {
       clearInterval(intervalId);
@@ -90,14 +95,16 @@ const CameraView = ({ onCaptureImage, onResetCapture }) => {
   }, []);
 
   return (
+    <>
     <div className="camera-container" style={{ display: "flex", flexDirection: "column"}}>
       
       {capturedImage ? (
-        <div style={{  display: "flex", alignItems: "center", flexDirection: "column"}}>
-          <img className="image-phone" src={capturedImage} alt="Captured" style={{ marginBottom: "10px" }} />
+        <div className="camera-view">
+          <img src={capturedImage} alt="Captured"  />
           
-        </div>
+        </div> 
       ) : (
+        <>
         <div className="camera-view">
           <video
             ref={videoRef}
@@ -107,15 +114,18 @@ const CameraView = ({ onCaptureImage, onResetCapture }) => {
             width={320}
             height={240}
           />
+          
         </div>
-      )}
-      <div className="canvas-container" style={{ position: "absolute", textAlign: "center", color: "black" }}>
-      <canvas
-          ref={canvasRef}
-          width={320}
-          height={240}
-        />
-        </div>
+        <div className="canvas-container" style={{ position: "absolute" }}>
+        <canvas
+            ref={canvasRef}
+            width={320}
+            height={240}
+          />
+          </div>
+          </>
+       )}  
+      </div>
         <div>
         {faceDetected ? (
           <div style={{ position:"relative",textAlign:"center"}}>
@@ -126,21 +136,21 @@ const CameraView = ({ onCaptureImage, onResetCapture }) => {
           </div>
           </div>
         ) : (
-          <div style={{ marginTop: '10px' }}>
+          <div style={{ position:"relative",textAlign:"center"}}>
             <p>Detecting Face.. <i className="fas fa-spinner fa-spin"></i></p>
           </div>
         )}
       </div>
-    </div>
-  );
-};
-
-const FaceForm = () => {
-  return (
-    <>
-      <CameraView />
     </>
   );
 };
 
-export default FaceForm;
+// const FaceForm = ({onCaptureImage,onResetCapture}) => {
+//   return (
+//     <>
+//       <CameraView onCaptureImage={}/>
+//     </>
+//   );
+// };
+
+export default CameraView;
