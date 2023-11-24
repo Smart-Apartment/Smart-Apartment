@@ -6,6 +6,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import Users from "../Users/users";
 import Residents from "../ResidentLog/residents";
 import Complaints from "../Complaints/complaints";
+import Service from "../serviceproviders/service";
 
 function Admin(props) {
   const { classes } = props;
@@ -96,6 +97,7 @@ function Admin(props) {
       {active == 1 ? <Users /> : ""}
       {active == 2 ? <Residents /> : ""}
       {active == 4 ? <Complaints /> : ""}
+      {active == 6 ? <Service /> : ""}
     </div>
   );
 }
