@@ -1,0 +1,70 @@
+const styles = {
+  parent: {
+    width: "80%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    "@media(max-width:700px)": {
+      width: "100%",
+      marginTop: "30px",
+    },
+  },
+  form: {
+    position: "relative",
+    backgroundColor: "#000",
+    width: "98%",
+    flexShrink: 0,
+    display: "flex",
+    flexDirection: "column",
+    padding: "0 20px",
+    gap: "10px",
+    flexWrap: "wrap",
+    height: "97%",
+    borderRadius: "10px",
+    paddingTop: "10vh",
+  },
+  input: {
+    width: "50vw",
+    flexShrink: 0,
+    height: "6vh",
+    border: "1px solid #000",
+    borderRadius: "10px",
+    color: "black",
+    padding: "0 10px",
+    backgroundColor: "#fff",
+    "&:focus": {
+      outline: "orange",
+      border: "2px solid orange",
+    },
+  },
+  head: {
+    position: "absolute",
+    top: "20px",
+    left: "20px",
+    color: "white",
+    fontSize: "150%",
+    fontWeight: "700",
+  },
+  imageUpload: {
+    flexShrink: 0,
+    display: "flex",
+    gap: "10px",
+    alignItems: "center",
+    flexDirection: "column",
+    height: "15%",
+    backgroundColor: "#fff",
+  },
+  upload: {
+    fontSize: "3vw",
+  },
+  button: {
+    color: "white",
+    height: "7%",
+    width: "100px",
+    flexShrink: 0,
+    backgroundColor: "rgba(250,0,50,0.6)",
+  },
+};
+
+export default styles;
