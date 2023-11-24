@@ -7,6 +7,7 @@ class Registration(BaseModel):
     aadhar_number:str
     email:str
     password:str
+    phone_number:str
     user_name:str
     confirmpassword:str
-    
+    image:bytes

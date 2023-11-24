@@ -8,9 +8,17 @@ import json
 from io import BytesIO
 import gridfs
 import base64
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"], 
+    allow_credentials=True,
+    allow_methods=["POST","GET"],
+    allow_headers=["*"],
+)
 client = MongoClient("mongodb://127.0.0.1:27017")
 db = client["Smart-app"]
 register = db["register"]
@@ -40,6 +48,7 @@ def home(user: Registration):
             "aadhar_number": user.aadhar_number,
             "email": user.email,
             "password": user.password,
+            "phone_number":user.phone_number,
             "user_name": user.user_name,
             "image": image_id
         }
