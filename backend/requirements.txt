@@ -18,4 +18,5 @@ uuid>=1.30
 joblib
 scikit-learn
 spacy
-spacy[en_core_web_sm]
+
+-e git+https://github.com/explosion/spacy-models#egg=en_core_web_sm
