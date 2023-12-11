@@ -21,7 +21,7 @@ app.include_router(visitors.router, prefix="/visitor", tags=["Visitor"])
 
 app.include_router(admin.router, prefix="/admin", tags=["Admin"])
 
-if __name__ == "__main__":
-    import uvicorn
+# if __name__ == "__main__":
+#     import uvicorn
 
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+#     uvicorn.run(app, host="127.0.0.1", port=8000)
