@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
 class LOGIN(BaseModel):
-    flat_no:int
-    user_name:str
+    phone_number:str
     password:str

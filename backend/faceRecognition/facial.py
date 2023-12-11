@@ -5,6 +5,7 @@ from PIL import Image
 from io import BytesIO
 import datetime
 import os 
+import zlib
 
 def imageFeature(image):
     try:
@@ -28,8 +29,10 @@ def imageFeature(image):
         hist = cv2.calcHist([image], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
 
         encoded_features = ",".join(map(str, hist.flatten()))
-
-        return encoded_features
+        print("Encoded",encoded_features)
+        compressed_data = zlib.compress(encoded_features.encode("utf-8"))
+        print(compressed_data)
+        return compressed_data
 
     except Exception as e:
         print(f"Error in imageFeature: {str(e)}")
@@ -44,7 +47,7 @@ def new_image(file_name):
 
 
 
-def genarate_feature(value):
+def generate_feature(value):
     value=value.decode("utf-8")
     # Extract the base64-encoded image data
     data_index = value.find(',') + 1
