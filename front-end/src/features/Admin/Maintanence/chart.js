@@ -86,7 +86,7 @@ function Chart(props) {
   async function getBudget() {
     await axios
       .get(
-        `http://localhost:8000/admin/getBudgetData/${new Date().getFullYear()}`
+        `https://smartapartmentserver.onrender.com/admin/getBudgetData/${new Date().getFullYear()}`
       )
       .then((res) => {
         let d = [

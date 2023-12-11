@@ -40,7 +40,9 @@ function Users(props) {
 
   async function handleRemove(evt) {
     await axios
-      .post(`http://localhost:8000/user/remove/${evt.target.id}`)
+      .post(
+        `https://smartapartmentserver.onrender.com/user/remove/${evt.target.id}`
+      )
       .then(() => {
         props.handleRender();
       });

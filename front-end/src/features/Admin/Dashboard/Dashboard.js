@@ -7,9 +7,11 @@ function Dashboard(props) {
   const [visitorsCount, setVisitorsCount] = useState(0);
 
   async function getData() {
-    await axios.get("http://localhost:8000/admin/visitorsCount").then((res) => {
-      setVisitorsCount(res.data[0]);
-    });
+    await axios
+      .get("https://smartapartmentserver.onrender.com/admin/visitorsCount")
+      .then((res) => {
+        setVisitorsCount(res.data[0]);
+      });
   }
   useEffect(() => {
     getData();

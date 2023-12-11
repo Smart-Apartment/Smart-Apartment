@@ -20,9 +20,11 @@ function Form(props) {
       yearly: `${evt.target.form[9].value}`,
       otherExpenses: 0,
     };
-    axios.post("http://localhost:8000/admin/BudgetUpdate", d).then((res) => {
-      console.log("done");
-    });
+    axios
+      .post("https://smartapartmentserver.onrender.com/admin/BudgetUpdate", d)
+      .then((res) => {
+        console.log("done");
+      });
   }
 
   return (

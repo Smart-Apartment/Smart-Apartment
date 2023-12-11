@@ -18,7 +18,9 @@ function ViewServiceProviders(props) {
 
   async function getServiceProvider() {
     await axios
-      .get(`http://localhost:8000/admin/getServiceProviders`)
+      .get(
+        `https://smartapartmentserver.onrender.com/admin/getServiceProviders`
+      )
       .then((res) => {
         getData(res.data[0]);
         setloaded(1);
@@ -32,7 +34,7 @@ function ViewServiceProviders(props) {
   async function handleRemove(evt) {
     await axios
       .post(
-        `http://localhost:8000/admin/removeServiceProvider/${evt.target.id}`
+        `https://smartapartmentserver.onrender.com/admin/removeServiceProvider/${evt.target.id}`
       )
       .then((res) => {
         if (res.data === 200) {
@@ -44,7 +46,9 @@ function ViewServiceProviders(props) {
   async function handleSearch(evt) {
     if (evt.target.value.length > 0) {
       await axios
-        .get(`http://localhost:8000/admin/serviceSearch/${evt.target.value}`)
+        .get(
+          `https://smartapartmentserver.onrender.com/admin/serviceSearch/${evt.target.value}`
+        )
         .then((res) => {
           if (res.data[1] === 200) {
             getData(res.data[0]);

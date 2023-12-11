@@ -17,7 +17,7 @@ function Loading(props) {
     let data = window.localStorage.getItem("sa-token");
     if (data) {
       await axios
-        .get(`http://localhost:8000/admin/getToken/${data}`)
+        .get(`https://smartapartmentserver.onrender.com/admin/getToken/${data}`)
         .then((res) => {
           if (res.data[1] === 200) {
             setAuth(true);

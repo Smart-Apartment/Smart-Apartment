@@ -39,7 +39,7 @@ function Chart(props) {
   const [budget, setBudget] = useState({});
   async function getBudgetData() {
     await axios(
-      `http://localhost:8000/admin/getBudgetData/${new Date().getFullYear()}`
+      `https://smartapartmentserver.onrender.com/admin/getBudgetData/${new Date().getFullYear()}`
     ).then((res) => {
       res = res.data[0][0];
       let d = [
@@ -79,9 +79,11 @@ function Chart(props) {
 function VisitorChart(props) {
   const [visitors, setVisitors] = useState(0);
   async function getData() {
-    await axios.get("http://localhost:8000/admin/visitorsChart").then((res) => {
-      setVisitors(res.data[0]);
-    });
+    await axios
+      .get("https://smartapartmentserver.onrender.com/admin/visitorsChart")
+      .then((res) => {
+        setVisitors(res.data[0]);
+      });
   }
 
   useEffect(() => {

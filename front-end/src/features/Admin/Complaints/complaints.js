@@ -7,11 +7,13 @@ function Complaints(props) {
   const [complaints, setComplaints] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/admin/getComplaints").then((res) => {
-      res.json().then((data) => {
-        setComplaints(data);
-      });
-    });
+    fetch("https://smartapartmentserver.onrender.com/admin/getComplaints").then(
+      (res) => {
+        res.json().then((data) => {
+          setComplaints(data);
+        });
+      }
+    );
   }, []);
 
   function Users() {

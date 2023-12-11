@@ -35,12 +35,14 @@ function Admin(props) {
   // }, []);
 
   function getUsers() {
-    fetch("http://localhost:8000/admin/users").then((response) => {
-      response.json().then((data) => {
-        setUsers(data);
-        setUserCount(data.length);
-      });
-    });
+    fetch("https://smartapartmentserver.onrender.com/admin/users").then(
+      (response) => {
+        response.json().then((data) => {
+          setUsers(data);
+          setUserCount(data.length);
+        });
+      }
+    );
   }
 
   useEffect(() => {
@@ -48,7 +50,9 @@ function Admin(props) {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8000/admin/getComplaintsCount").then((res) => {
+    fetch(
+      "https://smartapartmentserver.onrender.com/admin/getComplaintsCount"
+    ).then((res) => {
       res.json().then((data) => {
         setComplaintsCount(data);
       });
@@ -64,7 +68,7 @@ function Admin(props) {
   async function handleSearch(evt) {
     if (evt.target.value.length > 0) {
       await axios(
-        `http://localhost:8000/admin/userSearch/${evt.target.value}`
+        `https://smartapartmentserver.onrender.com/admin/userSearch/${evt.target.value}`
       ).then((res) => {
         setUsers(res.data[0]);
       });

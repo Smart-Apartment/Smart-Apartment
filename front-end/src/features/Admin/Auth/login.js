@@ -18,12 +18,12 @@ function Login(props) {
       password: evt.target[1].value,
     };
     await axios
-      .post("http://localhost:8000/admin/login", data)
+      .post("https://smartapartmentserver.onrender.com/admin/login", data)
       .then(async (res) => {
         let token = String(v4());
         window.localStorage.setItem("sa-token", token);
         await axios
-          .post("http://localhost:8000/admin/setToken", {
+          .post("https://smartapartmentserver.onrender.com/admin/setToken", {
             token: token,
           })
           .then(() => {

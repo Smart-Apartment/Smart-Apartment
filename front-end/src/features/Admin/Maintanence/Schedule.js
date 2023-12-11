@@ -65,7 +65,7 @@ function Schedule(props) {
 
   async function getMaintainDataFromServer() {
     await fetch(
-      `http://localhost:8000/admin/getMaintainData/${new Date().getFullYear()}`,
+      `https://smartapartmentserver.onrender.com/admin/getMaintainData/${new Date().getFullYear()}`,
       { method: "GET" }
     ).then((res) => {
       res.json().then((d) => {

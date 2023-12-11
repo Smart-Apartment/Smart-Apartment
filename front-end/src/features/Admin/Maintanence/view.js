@@ -34,26 +34,30 @@ function View(props) {
   async function getData() {
     await axios
       .get(
-        `http://localhost:8000/admin/getBudgetData/${new Date().getFullYear()}`
+        `https://smartapartmentserver.onrender.com/admin/getBudgetData/${new Date().getFullYear()}`
       )
       .then((res) => {
         setBudget(res.data[0]);
       });
     await axios
       .get(
-        `http://localhost:8000/admin/getInvoiceData/${new Date().getFullYear()}`
+        `https://smartapartmentserver.onrender.com/admin/getInvoiceData/${new Date().getFullYear()}`
       )
       .then((res) => {
         setInvoice(res.data[0]);
       });
     await axios
-      .get(`http://localhost:8000/admin/getServiceProviders`)
+      .get(
+        `https://smartapartmentserver.onrender.com/admin/getServiceProviders`
+      )
       .then((res) => {
         setServiceProviderData(res.data[0]);
       });
-    await axios.get("http://localhost:8000/admin/getComplaints").then((res) => {
-      setComplaints(res["data"][0]);
-    });
+    await axios
+      .get("https://smartapartmentserver.onrender.com/admin/getComplaints")
+      .then((res) => {
+        setComplaints(res["data"][0]);
+      });
     setLoaded(1);
   }
 

@@ -77,7 +77,7 @@ function Service(props) {
     };
 
     let response = await axios.post(
-      "http://localhost:8000/admin/addProvider",
+      "https://smartapartmentserver.onrender.com/admin/addProvider",
       data
     );
   }
