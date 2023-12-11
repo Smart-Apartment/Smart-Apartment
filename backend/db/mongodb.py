@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
 
-client = MongoClient("mongodb://127.0.0.1:27017")
+client = MongoClient("mongodb+srv://saravana1:qwertyuioplkjhgfdsa@cluster0.gdr7v46.mongodb.net/?retryWrites=true&w=majority")
 db = client["Smart-app"]
 register = db["register"]
 complaints_collection = db["complaints"]
