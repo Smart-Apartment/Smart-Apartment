@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 import {
   BarChart,
   Bar,
@@ -8,28 +10,17 @@ import {
   LineChart,
   Line,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
-
-function monthlyBudget(count = 100) {
-  let electricity = count * 1000;
-  let water = 5000;
-  let services = count * 2000;
-  let wage = 50000;
-  return [
-    { key: "income", value: count * 5000 },
-    { key: "budget", value: electricity + water + services + wage },
-    { key: "Current", value: (electricity + water + services + wage) * 0.5 },
-  ];
-}
 
 function CustomTooltip({ active, payload, label }) {
   if (active && payload && payload.length) {
     return (
       <div
         style={{
+          padding: "10px",
           backgroundColor: "white",
           fontSize: "15px",
-          padding: "10px",
           borderRadius: "10px",
         }}
       >
@@ -45,28 +36,59 @@ function CustomTooltip({ active, payload, label }) {
 }
 
 function Chart(props) {
+  const [budget, setBudget] = useState({});
+  async function getBudgetData() {
+    await axios(
+      `http://localhost:8000/admin/getBudgetData/${new Date().getFullYear()}`
+    ).then((res) => {
+      res = res.data[0][0];
+      let d = [
+        { key: "Budget", value: res["totalCostPerSquareFeet"] * res["sqft"] },
+        {
+          key: "Expense",
+          value:
+            res["psqftQuaterly"] * res["sqft"] +
+            res["psqftHalf"] * res["sqft"] +
+            res["psqftYearly"] * res["sqft"] +
+            res["otherExpenses"],
+        },
+      ];
+      setBudget(d);
+    });
+  }
+
+  useEffect(() => {
+    getBudgetData();
+  }, []);
+
   return (
-    <BarChart width={props.width} height={270} data={monthlyBudget()}>
-      <XAxis dataKey="key" color="#fff" />
-      <YAxis dataKey="value" color="#fff" />
-      <Tooltip cursor={{ fill: "transparent" }} />
-      <Bar dataKey="value" fill="orange" background={{ fill: "#000" }} />
-    </BarChart>
+    <ResponsiveContainer height="75%" width="80%">
+      <BarChart width={props.width} height={props.height} data={budget}>
+        <XAxis dataKey="key" style={{ color: "black" }} />
+        <YAxis dataKey="value" />
+        <Tooltip
+          cursor={{ fill: "#000" }}
+          style={{ backgroundColor: "#000" }}
+        />
+        <Bar dataKey="value" fill="orange" background={{ fill: "#000" }} />
+      </BarChart>
+    </ResponsiveContainer>
   );
 }
 
 function VisitorChart(props) {
-  const data = [
-    { day: "monday", checkIn: 123, checkOut: 140 },
-    { day: "Tuesday", checkIn: 145, checkOut: 140 },
-    { day: "Wednesday", checkIn: 120, checkOut: 120 },
-    { day: "Thursday", checkIn: 70, checkOut: 76 },
-    { day: "Friday", checkIn: 102, checkOut: 100 },
-    { day: "Saturday", checkIn: 189, checkOut: 90 },
-    { day: "Sunday", checkIn: 190, checkOut: 220 },
-  ];
+  const [visitors, setVisitors] = useState(0);
+  async function getData() {
+    await axios.get("http://localhost:8000/admin/visitorsChart").then((res) => {
+      setVisitors(res.data[0]);
+    });
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
-    <LineChart width={props.width} height={200} data={data}>
+    <LineChart width={props.width} height={230} data={visitors}>
       <XAxis dataKey="day" />
       <YAxis />
       <Tooltip content={<CustomTooltip />} />

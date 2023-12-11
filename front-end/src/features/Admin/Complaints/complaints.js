@@ -1,8 +1,52 @@
 import { withStyles } from "@material-ui/styles";
-import style from "./style";
+import styles from "./style";
+import { useState, useEffect } from "react";
 
 function Complaints(props) {
   const { classes } = props;
+  const [complaints, setComplaints] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/admin/getComplaints").then((res) => {
+      res.json().then((data) => {
+        setComplaints(data);
+      });
+    });
+  }, []);
+
+  function Users() {
+    return complaints.map((k) => {
+      return (
+        <div className={classes.complaintsColumn}>
+          <p className={`${classes.complaintsRow} ${classes.complaintName}`}>
+            <i class="fa-solid fa-user"></i>
+            {"  "} {k["name"].toUpperCase()}
+          </p>
+          <p className={`${classes.complaintsRow}  ${classes.complaintDate}`}>
+            <i class="fa-solid fa-building"></i>
+            {"  "}
+            {"Flat "}
+            {k["flat_no"]}
+          </p>
+          <p className={`${classes.complaintsRow} ${classes.complaintDate}`}>
+            <i class="fa-solid fa-calendar-days"></i>
+            {"  "}
+            {k["date"]} - {k["time"]}
+          </p>
+          <p
+            className={`${classes.complaintsRow} ${classes.complaintDescription}`}
+          >
+            <span className={classes.span}>{k["description"]}</span>
+          </p>
+          <div className={classes.row}>
+            <button id="userId" className={classes.button} disabled>
+              {k["status"]}
+            </button>
+          </div>
+        </div>
+      );
+    });
+  }
 
   return (
     <div className={classes.complaints}>
@@ -19,8 +63,9 @@ function Complaints(props) {
           </div>
         </div>
       </div>
+      <div className={classes.complaintstable}>{Users()}</div>
     </div>
   );
 }
 
-export default withStyles(style)(Complaints);
+export default withStyles(styles)(Complaints);

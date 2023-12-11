@@ -4,16 +4,19 @@ import { useEffect, useState } from "react";
 import Menu from "../menu/menu";
 import Dashboard from "../Dashboard/Dashboard";
 import Users from "../Users/users";
-import Residents from "../ResidentLog/residents";
+import Visitor from "../Visitors/log";
 import Complaints from "../Complaints/complaints";
 import Service from "../serviceproviders/service";
+import MaintenanceForm from "../Maintanence/Maintenance";
+import axios from "axios";
 
 function Admin(props) {
   const { classes } = props;
   const [userCount, setUserCount] = useState(0);
   const [Budget, setBudget] = useState({});
-  const [complaintsCount, setComplaintsCount] = useState(0);
-  const [visitorsCount, setvisitorsCount] = useState(0);
+  const [complaintsCount, setComplaintsCount] = useState([]);
+  const [visitorsCount, setvisitorsCount] = useState(384);
+  const [users, setUsers] = useState({});
   const [menu, setMenu] = useState(window.innerWidth <= 700 ? false : true);
   const [menuIcon, setmenuIcon] = useState(
     window.innerWidth <= 700 ? true : false
@@ -21,24 +24,52 @@ function Admin(props) {
   const [close, setClose] = useState(window.innerWidth <= 700 ? true : false);
   const [width, setWidth] = useState(window.innerWidth);
   const [active, setActive] = useState(0);
+  const [complaints, setComplaints] = useState({});
 
-  //Usercount
-  //   useEffect(() => {
-  //     fetch("http://localhost:8000/getCount").then((response) => {
-  //       response.json().then((data) => {
-  //         setCount(data.count);
-  //       });
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/getBudget").then((response) => {
+  //     response.json().then((data) => {
+  //       setBudget(data.count);
   //     });
-  //   },[]);
+  //   });
+  // }, []);
 
-  //Budget
-  //   useEffect(() => {
-  //     fetch("http://localhost:8000/getBudget").then((response) => {
-  //       response.json().then((data) => {
-  //         setBudget(data.count);
-  //       });
-  //     });
-  //   },[]);
+  function getUsers() {
+    fetch("http://localhost:8000/admin/users").then((response) => {
+      response.json().then((data) => {
+        setUsers(data);
+        setUserCount(data.length);
+      });
+    });
+  }
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/admin/getComplaintsCount").then((res) => {
+      res.json().then((data) => {
+        setComplaintsCount(data);
+      });
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/admin/getVisitors").then((res) => {
+  //     res.json().then((data) => {});
+  //   });
+  // }, []);
+
+  async function handleSearch(evt) {
+    if (evt.target.value.length > 0) {
+      await axios(
+        `http://localhost:8000/admin/userSearch/${evt.target.value}`
+      ).then((res) => {
+        setUsers(res.data[0]);
+      });
+    }
+  }
 
   useEffect(() => {
     let eventListener = window.addEventListener("resize", () => {
@@ -73,7 +104,7 @@ function Admin(props) {
   }
 
   return (
-    <div className={classes.parent}>
+    <div className={classes.adminParent}>
       <Menu
         menuIcon={menuIcon}
         visibility={menu}
@@ -94,10 +125,19 @@ function Admin(props) {
       ) : (
         ""
       )}
-      {active == 1 ? <Users /> : ""}
-      {active == 2 ? <Residents /> : ""}
-      {active == 4 ? <Complaints /> : ""}
-      {active == 6 ? <Service /> : ""}
+      {active == 1 ? (
+        <Users
+          users={users}
+          handleRender={getUsers}
+          handleSearch={handleSearch}
+        />
+      ) : (
+        ""
+      )}
+      {active == 2 ? <Visitor /> : ""}
+      {active == 3 ? <Complaints complaints={complaints} /> : ""}
+      {active == 4 ? <Service /> : ""}
+      {active == 5 ? <MaintenanceForm /> : ""}
     </div>
   );
 }

@@ -1,9 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    padding: 5px;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width:10px;
+    margin: 0 2px;
+    border-radius: 10px;
+    height: 5px;
+    background-color:rgb(80,80,80) ;
+  }
 }
 
 a {
@@ -27,7 +47,7 @@ li {
   align-items: center;
   height: 12vh;
   box-shadow: rgba(0, 0, 0, 0.416) 0px 30px 30px -20px;
-  background-color: rgb(13, 13, 58);
+  background-color: rgb(0, 0, 0);
   
 }
 
@@ -51,11 +71,11 @@ li {
 }
 .nav-links li:hover{
   transform: scale(1.1);
-  color: whitesmoke;
+  color: yellow;
 }
 
 .nav-links li {
-  color: white;
+  color: orange;
   font-size: 20px;
   padding: 10px 20px;
   margin: 0 10px;
@@ -95,7 +115,7 @@ button {
     top: 12%;
     transition: all 0.5s ease-in-out;
     width: 100%;
-    background-color: rgb(0,0,62);
+    background-color: rgb(0, 0, 0);
   }
   .nav-links-mobile  li {
     padding: 32px;
@@ -104,10 +124,10 @@ button {
     text-align: center;
     font-size: large;
     font-family: Poppins;
-    color: white;
+    color: orange;
   }
   .nav-links-mobile li:hover{
-    color: blue;
+    color: yellow;
   }
   .mobile-menu-icon {
     position: relative;

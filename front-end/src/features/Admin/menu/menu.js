@@ -44,7 +44,7 @@ function Menu(props) {
         <div className={classes.menu}>
           <div className={`${classes.logo}`}>
             <img className={classes.logoimg} src={logo} alt="logo" />
-            <p>Smart Apartments</p>
+            <p className={classes.logoText}>Smart Apartments</p>
             {props.close ? (
               <i
                 id="close"

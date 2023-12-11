@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class Registration(BaseModel):
     full_name : str
@@ -11,3 +12,4 @@ class Registration(BaseModel):
     user_name:str
     confirmpassword:str
     image:bytes
+    features:Optional[str]=None

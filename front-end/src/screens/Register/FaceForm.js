@@ -30,20 +30,47 @@ const CameraView = ({ onCaptureImage, onResetCapture }) => {
     }
   };
 
-  const captureImage = () => {
+  const captureImage = (detection) => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-
+  
+    // Capture the full image
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-    const imageDataURL = canvas.toDataURL('image/jpeg');
-    if(imageDataURL){
-      setCapturedImage(imageDataURL);
-      onCaptureImage(imageDataURL);
+    const fullImageDataURL = canvas.toDataURL('image/jpeg');
+    
+    // Crop the face from the full image
+    const face = detection.box;
+    const context = canvas.getContext('2d');
+    canvas.width = face.width;
+    canvas.height = face.height;
+  
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  
+    context.drawImage(
+      video,
+      face.x,
+      face.y,
+      face.width,
+      face.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+  
+    const cropDataURL = canvas.toDataURL('image/jpeg');
+  
+    console.log(cropDataURL);
+  
+    if (cropDataURL) {
+      setCapturedImage(fullImageDataURL);
+      
+      onCaptureImage(cropDataURL);
+      
       stopCamera();
     }
-
+  
     setFaceDetected(true);
   };
 
@@ -62,7 +89,7 @@ const CameraView = ({ onCaptureImage, onResetCapture }) => {
       if (detection.score >= 0.8) {
         console.log('Face detected with accuracy above 0.8:', detection);
         setFaceDetected(true);
-        captureImage();
+        captureImage(detection);
       } 
      
     });
@@ -137,7 +164,7 @@ const CameraView = ({ onCaptureImage, onResetCapture }) => {
           </div>
         ) : (
           <div style={{ position:"relative",textAlign:"center"}}>
-            <p>Detecting Face.. <i className="fas fa-spinner fa-spin"></i></p>
+            <p>Detecting Face.. <i className="fa fa-spinner fa-spin"></i></p>
           </div>
         )}
       </div>

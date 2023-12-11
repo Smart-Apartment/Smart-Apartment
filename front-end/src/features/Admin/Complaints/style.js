@@ -5,6 +5,7 @@ const style = {
       width: "100%",
       marginTop: "30px",
     },
+    
   },
   nav: {
     width: "100%",
@@ -45,6 +46,55 @@ const style = {
     "&::placeholder": {
       paddingLeft: "5px",
     },
+  },
+  complaintstable: {
+    width: "100%",
+    overflowY: "auto",
+    display: "flex",
+    margin: "10px",
+    gap: "10px",
+    flexWrap: "wrap",
+  },
+  complaintName: {
+    //  color: "orange",
+    fontSize: "1.2rem",
+    fontWeight: "800",
+  },
+  columnDate: {
+    fontSize: "1vw",
+    fontWeight: "600",
+  },
+  complaintsColumn: {
+    width: "48%",
+    position: "relative",
+    padding: "20px",
+    borderRadius: "10px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundColor: "black",
+    color: "white",
+    gap: "10px",
+    "@media(max-width:1100px)": {
+      width: "97%",
+    },
+  },
+  button: {
+    position: "absolute",
+    right: "20px",
+    top: "20px",
+    minWidth: "25px",
+    backgroundColor: "rgba(250,0,50,0.6)",
+    color: "white",
+    height: "30px",
+    display: "flex",
+    alignItems: "center",
+    fontSize: "1vw",
+  },
+  span: {
+    marginLeft: "4%",
+    textAlign: "justify",
+    color: "orange",
   },
 };
 

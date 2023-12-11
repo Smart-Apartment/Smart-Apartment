@@ -7,10 +7,11 @@ export const Register=()=>{
       <CssBaseline />
         
         <Container style={{ paddingTop: "12vh" }} maxWidth={"sm"} component={Box} p={3}>
-          <Paper component={Box} p={3}>
+          <Paper style={{backgroundColor:'grey'}} component={Box} p={3}>
             <RegisterScreen />
           </Paper>
         </Container>
       </>
     )
   }
+ 

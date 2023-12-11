@@ -18,10 +18,26 @@
 
     <title>Smart Apartment</title>
     <style>
+      :root {
+        --fs-small: 15px;
+        --fs-med: 20px;
+        --fs-lrg: 30px;
+        @media (max-width: 700px) {
+          --fs-small: 10px;
+          --fs-med: 15px;
+          --fs-lrg: 25px;
+        }
+        @media (max-height: 600px) {
+          --fs-small: 10px;
+          --fs-med: 15px;
+          --fs-lrg: 25px;
+        }
+      }
       html,
       body {
         width: 100vw;
         height: 100vh;
+        transition: none !important;
       }
       #root {
         width: 100%;

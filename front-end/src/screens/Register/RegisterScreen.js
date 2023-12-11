@@ -1,12 +1,14 @@
 import React, { useState} from "react";
 import { MuiTelInput } from 'mui-tel-input';
 import "./register.css";
-import {PersonOutlined,Cake, EmailOutlined, PasswordOutlined, BadgeOutlined, PhoneOutlined,VisibilityOutlined,VisibilityOffOutlined, Padding, HomeMaxOutlined, HouseOutlined, MapsHomeWorkOutlined, Person2Outlined} from '@mui/icons-material';
+import {PersonOutlined,Cake, EmailOutlined, PasswordOutlined, PhoneOutlined,VisibilityOutlined,VisibilityOffOutlined,  MapsHomeWorkOutlined, Person2Outlined} from '@mui/icons-material';
 import InputAdornment from '@mui/material/InputAdornment';
 import PasswordChecklist from 'react-password-checklist';
 import IconButton from '@mui/material/IconButton';
 import { Link } from "react-router-dom";
 import axios from "axios";
+import {Snackbar} from "@material-ui/core";
+import Alert from '@mui/material/Alert'
 
 import {
   
@@ -32,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
   textField:{
-    backgroundColor:"whitesmoke",
     notchedOutline: {
       px: 10,
     },
@@ -40,9 +41,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize:"14px"
   },
   root: {
-    "& .MuiStepIcon-active": { color: "black" },
-    "& .MuiStepIcon-completed": { color: "green" },
-    "& .Mui-disabled .MuiStepIcon-root": { color: "grey" },
+    "& .MuiStepIcon-active": { color: "orange" },
+    "& .MuiStepIcon-completed": { color: "yellow" },
+    "& .Mui-disabled .MuiStepIcon-root": { color: "black" },
   },
   
 }));
@@ -56,19 +57,19 @@ function getSteps() {
 
 
 const BasicForm = ({handleValidationChange}) => {
-  const { control,formState: { errors },setValue,getValues,setError,clearErrors } = useFormContext();
+  const { control,formState: { errors },getValues,setError,clearErrors } = useFormContext();
   const classes=useStyles();
   const error={
-    fullName:"Full Name is Required",
-    userName:"UserName is Required",
+    full_name:"Full Name is Required",
+    user_name:"UserName is Required",
 
     dob:"Date Of Birth is Required",
     email:"Email Id is Required",
-    phoneNumber:"Phone Number is Required",
-    aadharNumber:"Aadhar Number is Required",
+    phone_number:"Phone Number is Required",
+    aadhar_number:"Aadhar Number is Required",
     password:"Password is Required",
-    confirmPassword:"Passwords Should Match",
-    flatno:"Flat Number Is Required"
+    confirmpassword:"Passwords Should Match",
+    flat_no:"Flat Number Is Required"
   }
   const [showPassword, setShowPassword] = useState(false);
   const [passwordFieldFocused, setPasswordFieldFocused] = useState(false);
@@ -103,9 +104,9 @@ const BasicForm = ({handleValidationChange}) => {
             variant="outlined"
             fullWidth
             placeholder="Enter Your Full Name"
-            error={!!errors.fullName }
+            error={!!errors.full_name }
             inputRef={ref}
-            helperText={errors.fullName && `${error.fullName}`}
+            helperText={errors.full_name && `${error.full_name}`}
             margin="normal"
             {...field}
 
@@ -137,9 +138,9 @@ const BasicForm = ({handleValidationChange}) => {
             variant="outlined"
             fullWidth
             margin="normal"
-            error={!!errors.Dob }
+            error={!!errors.dob }
             inputRef={ref}
-            helperText={errors.Dob && `${error.dob}`}
+            helperText={errors.dob && `${error.dob}`}
             {...field}
             InputLabelProps={{
               shrink: true,
@@ -171,9 +172,9 @@ const BasicForm = ({handleValidationChange}) => {
             variant="outlined"
             fullWidth
             placeholder="Enter Your User Name"
-            error={!!errors.userName }
+            error={!!errors.user_name }
             inputRef={ref}
-            helperText={errors.userName && `${error.userName}`}
+            helperText={errors.user_name && `${error.user_name}`}
             margin="normal"
             {...field}
 
@@ -202,9 +203,9 @@ const BasicForm = ({handleValidationChange}) => {
             label="E-mail"
             variant="outlined"
             type="email"
-            error={!!errors.emailAddress }
+            error={!!errors.email }
             inputRef={ref}
-            helperText={errors.emailAddress && `${error.email}`}
+            helperText={errors.email && `${error.email}`}
             placeholder="Enter Your E-mail Address"
             fullWidth
             margin="normal"
@@ -234,9 +235,9 @@ const BasicForm = ({handleValidationChange}) => {
             id="flatno"
             label="Flat No"
             variant="outlined"
-            error={!!errors.flatno }
+            error={!!errors.flat_no }
             inputRef={ref}
-            helperText={errors.flatno && `${error.flatno}`}
+            helperText={errors.flat_no && `${error.flat_no}`}
             placeholder="Enter Your Flat Number"
             fullWidth
             margin="normal"
@@ -271,10 +272,10 @@ const BasicForm = ({handleValidationChange}) => {
           fullWidth
           margin="normal"
           disableDropdown
-          disableFormatting
-          error={!!errors.phoneNumber }
+          forceCallingCode
+          error={!!errors.phone_number }
           inputRef={ref}
-          helperText={errors.phoneNumber?.message}
+          helperText={errors.phone_number?.message}
           {...field}
           InputProps={{
             startAdornment: (
@@ -290,44 +291,7 @@ const BasicForm = ({handleValidationChange}) => {
             style: { padding:'18.5px 0px' }
           }}
           defaultCountry="IN"
-          
          />
-        )}
-      />
-      <Controller
-        control={control}
-        name="aadhar_number"
-        rules={{
-          required:true,
-          
-        }}
-        render={({ field:{ref,...field} }) => (
-          <TextField
-            id="aadhar-number"
-            label="Aadhar Number"
-            variant="outlined"
-            placeholder="Enter Your Aadhar Number"
-            fullWidth
-            type="tel"
-            margin="normal"
-            error={!!errors.aadharNumber }
-            inputRef={ref}
-            helperText={errors.aadharNumber && `${error.aadharNumber}`}
-            {...field}
-            
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <BadgeOutlined />
-                </InputAdornment>
-              ),
-              className: classes.textField,
-
-            }}
-            inputProps={{
-              maxLength: 12,
-            }}
-          />
         )}
       />
       <Controller
@@ -372,7 +336,7 @@ const BasicForm = ({handleValidationChange}) => {
                 validatePassword("password")
               }}
               onFocus={() => setPasswordFieldFocused(true)}            
-
+              
           />
         )}
       />
@@ -404,7 +368,7 @@ const BasicForm = ({handleValidationChange}) => {
             onBlur={() => setPasswordFieldFocused(false)}
               onChange={(e) => {
                 field.onChange(e);
-                validatePassword("confirmPassword")
+                validatePassword("confirmpassword")
               }}
               onFocus={() => setPasswordFieldFocused(true)}            
 
@@ -428,7 +392,7 @@ const BasicForm = ({handleValidationChange}) => {
           iconSize={
           "14px"
           }
-          rules={['capital', 'match','specialChar', 'minLength', 'number']}
+          rules={['capital', 'match', 'minLength', 'number']}
           minLength={8}
           value={getValues("password")}
           valueAgain={getValues("confirmpassword")}
@@ -482,7 +446,9 @@ const RegisterScreen = () => {
  const c=useStyles();
  const [valid, setValid] = useState(false); 
  const [capturedImage, setCapturedImage] = useState(null);
-
+  const[errorSnackbar,setErrorSnackbar]=useState(false);
+  const [registerSnackbar,setRegisterSnackbar]=useState(false);
+  const[error,setError]=useState(null);
  const handleCaptureImage = (imageData) => {
    setCapturedImage(imageData);
    console.log("From Register Screen",imageData);
@@ -495,12 +461,28 @@ const RegisterScreen = () => {
   const handleValidationChange = (valid) => {
     setValid(valid);
   };
-
+//   const handleNext = (data) => {
+//     if (valid ) {
+//     console.log(data);
+//     if (activeStep === steps.length - 1) {
+//       fetch("https://jsonplaceholder.typicode.com/comments")
+//         .then((data) => data.json())
+//         .then((res) => {
+//           console.log(capturedImage);
+//           setActiveStep(activeStep + 1);
+//         });
+//     } else {
+//       setActiveStep(activeStep + 1);
+//     }
+//   }
+// };
+//Api Call 
 const handleNext = async (data) => {
  
  if(valid){
   const info={
     ...data,
+    
   }
   if(activeStep===0){
    setActiveStep(activeStep + 1);
@@ -514,21 +496,24 @@ const handleNext = async (data) => {
     console.log(formData)
 
     try {
-      const response = await axios.post('http://localhost:8000/user/register', formData);
+      const response = await axios.post('http://localhost:8000/auth/register', formData);
 
 
       if (response && response.data && response.status===200) {
         const result = await response.data;
         console.log(result);
-
+        setRegisterSnackbar(true);
         if (activeStep === steps.length - 1) {
           setActiveStep(activeStep + 1);
         }
       } else {
         console.error("Failed to register. Please try again.");
+        
       }
     } catch (error) {
       console.error("Error:", error);
+      setError(error.response.data.detail)
+        setErrorSnackbar(true);
     }
   }
 }
@@ -536,9 +521,16 @@ const handleNext = async (data) => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setError(null);
+    setRegisterSnackbar(false);
+    setErrorSnackbar(false);
+  };
   return (
-    <div>
+    <div >
     <header>
         <h1 style={{textAlign:"center"}}>Sign Up Page</h1>
     </header>
@@ -594,6 +586,18 @@ const handleNext = async (data) => {
         </FormProvider>
       )}
     </div>
+    <Snackbar  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={!!error} autoHideDuration={2000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose} severity="warning">
+          {error}
+        </Alert>
+      </Snackbar>
+      <Snackbar  anchorOrigin={{ vertical: 'top', horizontal:'right' }}
+          open={registerSnackbar} autoHideDuration={2000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose}  severity="success">
+          User Registered Successfully 
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

@@ -1,0 +1,32 @@
+.main {
+    position: relative;
+    margin-left: 150px;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease-in-out; 
+    z-index: 10000;
+    
+  }
+  
+  .main-open {
+    padding-top: 10px;
+    margin-left: 90px;
+    z-index: 10000;
+    top: 0;
+  }
+  
+  .main-collapsed {
+    padding-top: 10px;
+    margin-left: 170px;
+    z-index: 10000;
+  }
+ 
+ @media screen and (max-width:700px) {
+    
+    .main-open {
+        margin-left: 20px;
+      }
+      
+      .main-collapsed {
+        margin-left: 20px;
+      }
+ }

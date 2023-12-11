@@ -1,0 +1,80 @@
+
+.u-section-1 {
+  padding-top: 40px;
+  background-image: linear-gradient(to right,#343434, #111);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+html{scroll-behavior:smooth}
+.servicecard {
+  width: 99vw;
+  height: 100vh;
+  background-image: linear-gradient(to right, #343434, #111);
+  overflow-y: scroll;
+  display: flex;
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    padding: 5px;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width:10px;
+    margin: 0 2px;
+    height: 5px;
+    background-color:rgb(80,80,80) ;
+  }
+}
+.u-section-1 .u-sheet-1 {
+  min-height: 100vh;
+}
+#about {
+  overflow-y: auto;
+}
+@media (max-width: 767px) {
+  #mob-img {
+    width: 400px;
+    height: 500px;
+  }
+  .u-section-1 .u-sheet-1 {
+    padding-top: 60px;
+    min-height: 538px;
+  }
+  .mob-text1 {
+    font-size: 30px !important;
+    margin-left: 10px !important;
+  }
+  .mob-text2 {
+    font-size: 20px !important;
+    margin-left: 10px !important;
+    margin-top: 15px !important;
+  }
+  .mob-icon {
+    margin-left: 10px !important;
+  }
+  .mob-btn {
+    margin-top: 10px !important;
+    margin-left: 10px !important;
+  }
+  #about {
+    overflow: auto;
+  }
+  .avatar{
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    gap: 20px;
+
+  }
+}
+

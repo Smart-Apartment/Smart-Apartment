@@ -3,16 +3,15 @@
 .telinput{
  text-align: left;
 
+
 }
+
 .Stepper-root {
-    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-      }
-  
-  .StepLabel-label  {
-    color:white;
-  }
+    position: relative;
+    
+}
   .MuiStepLabel-labelContainer span {
     font-family:Poppins;
     font-size: small;
@@ -20,7 +19,8 @@
   .button-container {
     display: flex;
     justify-content:space-evenly;
-    margin-top: 20px; 
+    margin-top: 20px;
+     
   }
   Button{
     border: none;
@@ -41,19 +41,23 @@
   
 
   .ThankYouMessage {
-    font-family: monospace;
-    font-size: 24px;
-    color: #007BFF;
+    font-family:'Poppins';
+    font-size: 18px;
+    color:white;
   }
   .camera-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 0 auto;
-    height: 240px;
-    width: 320px;
+    justify-content: center;
+     margin: 0;
+     padding: 0;
   }
-
+.canvas-container{
+  position: relative;
+  margin-top: 0px; 
+   margin: 0;
+   padding: 0;
+}
  
 .TextField-root input[type="password"]::-ms-reveal {
 visibility: hidden;
@@ -65,7 +69,6 @@ visibility: hidden;
 @media (max-width: 768px) {
   .Stepper-root {
     overflow-y:auto; 
-    max-height: 500px; 
   }
   
   .button-container {
@@ -73,4 +76,5 @@ visibility: hidden;
     gap: 15px;
     
   }
+  
 }

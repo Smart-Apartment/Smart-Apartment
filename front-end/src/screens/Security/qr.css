@@ -1,0 +1,45 @@
+.qr-scanner-container {
+    position: relative;
+    align-self: center;
+    margin: 20px;
+    overflow: hidden;
+    height: 300px;
+    width: 300px;
+  }
+  
+  .qr-scanner-border {
+    position: absolute;
+    width: 20px; 
+    height: 20px; 
+    border: 4px  black solid;
+    border-radius: 3px;
+  }
+  
+  .qr-scanner-border.top {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .qr-scanner-border.right {
+    bottom:0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+  }
+  
+  .qr-scanner-border.bottom {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+  }
+  
+  .qr-scanner-border.left {
+    top:0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+  }
+  

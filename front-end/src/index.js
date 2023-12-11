@@ -1,11 +1,9 @@
 import ReactDOM from "react-dom";
 import React from 'react';
-import App from './App'
-import { AuthProvider } from "./screens/Login/AuthContext";
+import App from './App.js'
 ReactDOM.render(
-      <AuthProvider>
-      <App />
-      </AuthProvider>,
+    
+      <App />,
     document.getElementById("root")
   );
 

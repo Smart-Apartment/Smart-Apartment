@@ -1,11 +1,11 @@
 const keys = [
-  "First Name",
-  "Last Name",
-  "Email",
-  "Date of Birth",
-  "Mobile Number",
+  "Name",
   "Flat no",
-  "action",
+  "Date of Birth",
+  "Aadhar Number",
+  "Username",
+  "Email",
+  "remove",
 ];
 
 export default keys;

@@ -1,30 +1,49 @@
-import UserData from "../temp/users";
 import styles from "./style";
 import { withStyles } from "@material-ui/styles";
 import Keys from "./keys";
+import axios from "axios";
 
 function Users(props) {
   const { classes } = props;
 
   function Users() {
-    return Object.keys(UserData).map((k) => {
+    return Object.keys(props.users).map((k) => {
       return (
         <div className={classes.columns}>
-          <p className={classes.row}>{UserData[k]["fname"]}</p>
-          <p className={classes.row}>{UserData[k]["lname"]}</p>
-          <p className={classes.row}>{UserData[k]["email"]}</p>
-          <p className={classes.row}>{UserData[k]["DOB"]}</p>
-          <p className={classes.row}>{UserData[k]["Flat no"]}</p>
-          <p className={classes.row}>{UserData[k]["mob"]}</p>
+          <p className={classes.row}>{props.users[k]["full_name"]}</p>
+          <p className={classes.row}>{props.users[k]["flat_no"]}</p>
+          <p className={classes.row}>{props.users[k]["dob"]}</p>
+          <p className={classes.row}>{props.users[k]["aadhar_number"]}</p>
+          <p className={classes.row}>{props.users[k]["user_name"]}</p>
+          <p className={classes.row}>{props.users[k]["email"]}</p>
           <div className={classes.row}>
-            <button id="userId" className={classes.button}>
-              <span className={classes.span}>Remove</span>{" "}
-              <i class="fa-solid fa-trash"></i>
+            <button
+              id={props.users[k]["user_name"]}
+              className={classes.button}
+              onClick={handleRemove}
+            >
+              <span
+                className={classes.span}
+                id={props.users[k]["user_name"]}
+                onClick={handleRemove}
+              ></span>{" "}
+              <i
+                id={props.users[k]["user_name"]}
+                className="fa-solid fa-trash"
+              ></i>
             </button>
           </div>
         </div>
       );
     });
+  }
+
+  async function handleRemove(evt) {
+    await axios
+      .post(`http://localhost:8000/user/remove/${evt.target.id}`)
+      .then(() => {
+        props.handleRender();
+      });
   }
 
   function getTitles() {
@@ -44,7 +63,11 @@ function Users(props) {
             <i
               className={`fa-solid fa-magnifying-glass ${classes.searchLogo}`}
             ></i>
-            <input placeholder="search" className={classes.input} />
+            <input
+              placeholder="search"
+              className={classes.input}
+              onChange={props.handleSearch}
+            />
           </div>
         </div>
       </div>
