@@ -4,6 +4,6 @@ pymongo
 python-dotenv
 uvicorn
 jose
-gridfs==3.12.0
-databases==0.4.3
-pyjwt==2.3.0
+gridfs>=3.12.0
+databases>=0.4.3
+pyjwt>=2.3.0
