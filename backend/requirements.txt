@@ -20,4 +20,4 @@ scikit-learn
 spacy
 
 
--e git+https://github.com/explosion/spacy-models#egg=en_core_web_sm
+python -m spacy download en_core_web_sm
