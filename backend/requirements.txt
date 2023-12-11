@@ -3,5 +3,5 @@ bcrypt
 pymongo
 python-dotenv
 uvicorn
-jose>=1.3.2
+jose>=1.0.0
 pyjwt==2.3.0
