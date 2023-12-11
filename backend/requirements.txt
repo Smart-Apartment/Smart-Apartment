@@ -17,6 +17,4 @@ typing_extensions>=4.8.0
 uuid>=1.30
 joblib
 scikit-learn
-
-spacy
-python -m spacy download en_core_web_sm
+spacy[en_core_web_sm]
