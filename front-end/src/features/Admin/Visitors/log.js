@@ -12,7 +12,7 @@ function Users(props) {
     await axios(
       "https://smartapartmentserver.onrender.com/admin/getVisitor"
     ).then((res) => {
-      setLog(res);
+      setLog(res.data[0]);
     });
   }
 
@@ -21,7 +21,6 @@ function Users(props) {
   });
 
   function Users() {
-    console.log(logData);
     return logData.map((k) => {
       return (
         <div className={classes.columns}>
