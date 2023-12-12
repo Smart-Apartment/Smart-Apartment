@@ -6,7 +6,7 @@ import axios from "axios";
 
 function Users(props) {
   const { classes } = props;
-  const [logData, setLog] = useState({});
+  const [logData, setLog] = useState(false);
 
   async function getData() {
     await axios(
@@ -56,10 +56,14 @@ function Users(props) {
           </div>
         </div>
       </div>
-      <div className={classes.tables}>
-        <div className={classes.columns}>{getTitles()}</div>
-        <div className={classes.columnValues}>{Users()}</div>
-      </div>
+      {logData ? (
+        <div className={classes.tables}>
+          <div className={classes.columns}>{getTitles()}</div>
+          <div className={classes.columnValues}>{Users()}</div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
