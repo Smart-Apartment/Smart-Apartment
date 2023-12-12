@@ -175,6 +175,15 @@ async def main(year:str):
         return data,200
     else:
         return 404
+
+@router.get("/getVisitors")
+async def main():
+    data=visitors.find({},{"_id":0,})
+    if(data):
+        return list(data),200
+    else:
+        return 404
+
 @router.get("/admin/userSearch/{query}")
 async def search_items(query: str):
     regex_query = {"user_name": {"$regex": f".*{query}.*", "$options": "i"}}

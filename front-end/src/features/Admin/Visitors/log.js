@@ -1,13 +1,27 @@
-import logData from "../temp/residentLog";
 import styles from "../Users/style";
 import { withStyles } from "@material-ui/styles";
 import Keys from "./keys";
+import { useState } from "react";
+import axios from "axios";
 
 function Users(props) {
   const { classes } = props;
+  const [logData, setLog] = useState({});
+
+  async function getData() {
+    await axios(
+      "https://smartapartmentserver.onrender.com/admin/getVisitor"
+    ).then((res) => {
+      res.json().then((data) => {
+        setLog(data);
+      });
+    });
+  }
+
+  useState(() => {});
 
   function Users() {
-    return Object.keys(logData).map((k) => {
+    return logData.map((k) => {
       return (
         <div className={classes.columns}>
           <p className={classes.row}>{logData[k]["name"]}</p>
