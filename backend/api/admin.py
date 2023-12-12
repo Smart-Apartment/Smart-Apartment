@@ -176,7 +176,7 @@ async def main(year:str):
     else:
         return 404
 
-@router.get("/getVisitors")
+@router.get("/getVisitor")
 async def main():
     data=visitors.find({},{"_id":0,})
     if(data):
