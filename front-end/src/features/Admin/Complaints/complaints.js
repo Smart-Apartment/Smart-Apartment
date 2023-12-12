@@ -9,15 +9,15 @@ function Complaints(props) {
   useEffect(() => {
     fetch("https://smartapartmentserver.onrender.com/admin/getComplaints").then(
       (res) => {
-        console.log(res);
-        setComplaints(res.data[0]);
+        res.json().then((data) => {
+          setComplaints(data[0]);
+        });
       }
     );
   }, []);
 
   function Users() {
-    console.log(complaints);
-    return complaints[0].map((k) => {
+    return complaints.map((k) => {
       return (
         <div className={classes.complaintsColumn}>
           <p className={`${classes.complaintsRow} ${classes.complaintName}`}>
