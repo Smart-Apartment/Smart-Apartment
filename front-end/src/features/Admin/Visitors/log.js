@@ -24,12 +24,12 @@ function Users(props) {
     return logData.map((k) => {
       return (
         <div className={classes.columns}>
-          <p className={classes.row}>{k["name"]}</p>
-          <p className={classes.row}>{k["age"]}</p>
-          <p className={classes.row}>{k["phone"]}</p>
-          <p className={classes.row}>{k["in"]}</p>
-          <p className={classes.row}>{k["out"]}</p>
-          <p className={classes.row}>{k["flat no"]}</p>
+          <p className={classes.row}>{k["FullName"]}</p>
+          <p className={classes.row}>{k["phoneNumber"]}</p>
+          <p className={classes.row}>{k["check_in_time"]}</p>
+          <p className={classes.row}>{k["check_out_time"]}</p>
+          <p className={classes.row}>{k["flatno"]}</p>
+          <p className={classes.row}>{k["Purpose"]}</p>
         </div>
       );
     });
