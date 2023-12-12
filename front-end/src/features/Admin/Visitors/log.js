@@ -21,6 +21,7 @@ function Users(props) {
   });
 
   function Users() {
+    console.log(logData);
     return logData.map((k) => {
       return (
         <div className={classes.columns}>
