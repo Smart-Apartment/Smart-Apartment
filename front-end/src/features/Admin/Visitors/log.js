@@ -12,9 +12,7 @@ function Users(props) {
     await axios(
       "https://smartapartmentserver.onrender.com/admin/getVisitor"
     ).then((res) => {
-      res.json().then((data) => {
-        setLog(data);
-      });
+      setLog(res);
     });
   }
 
