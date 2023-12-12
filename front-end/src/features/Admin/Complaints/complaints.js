@@ -4,20 +4,20 @@ import { useState, useEffect } from "react";
 
 function Complaints(props) {
   const { classes } = props;
-  const [complaints, setComplaints] = useState([]);
+  const [complaints, setComplaints] = useState(false);
 
   useEffect(() => {
     fetch("https://smartapartmentserver.onrender.com/admin/getComplaints").then(
       (res) => {
-        res.json().then((data) => {
-          setComplaints(data);
-        });
+        console.log(res);
+        setComplaints(res.data[0]);
       }
     );
   }, []);
 
   function Users() {
-    return complaints.map((k) => {
+    console.log(complaints);
+    return complaints[0].map((k) => {
       return (
         <div className={classes.complaintsColumn}>
           <p className={`${classes.complaintsRow} ${classes.complaintName}`}>
@@ -65,7 +65,11 @@ function Complaints(props) {
           </div>
         </div>
       </div>
-      <div className={classes.complaintstable}>{Users()}</div>
+      {complaints ? (
+        <div className={classes.complaintstable}>{Users()}</div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
