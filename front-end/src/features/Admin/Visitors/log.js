@@ -18,7 +18,9 @@ function Users(props) {
     });
   }
 
-  useState(() => {});
+  useState(() => {
+    getData();
+  });
 
   function Users() {
     return logData.map((k) => {
