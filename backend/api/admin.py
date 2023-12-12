@@ -94,7 +94,7 @@ def remove(user_name : str):
     else:
         return("no data found")
     
-@router.get("/getComplaints", response_model=List[Complaints])
+@router.get("/getComplaints")
 async def get_appointments():
     appointments = complaints_collection.find({},{"_id":0})
     return list(appointments),200
