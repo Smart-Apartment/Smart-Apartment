@@ -15,7 +15,7 @@ const BookingHistory = () => {
 
   const fetchHistoryAppointments = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/complaints/appointments');
+      const response = await axios.get('https://smartapartmentserver.onrender.com/complaints/appointments');
       const historyAppointments1 = response.data.filter((appointment) => appointment.status !== 'Pending');
       setHistoryAppointments(historyAppointments1);
     } catch (error) {

@@ -110,7 +110,7 @@ function LoginForm() {
     form.append("password",data.password)
     try {
       
-      const response = await axios.post("http://127.0.0.1:8000/auth/login/serviceprovider", form);
+      const response = await axios.post("https://smartapartmentserver.onrender.com/auth/login/serviceprovider", form);
       if(response){
       setToken(response.data.access_token);
       Cookies.set("token", response.data.access_token);

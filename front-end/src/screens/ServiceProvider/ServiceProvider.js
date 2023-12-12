@@ -41,7 +41,7 @@ const ServiceProvider = () => {
   
   }, [token]);
   const getUser=async()=>{
-    const res=await axios.get("http://localhost:8000/users/getservice");
+    const res=await axios.get("https://smartapartmentserver.onrender.com/users/getservice");
     if(res.status===200){
       setUser(res.data);
       setRole(res.data.role);
@@ -70,7 +70,7 @@ const ServiceProvider = () => {
       current_password:currentPassword,
     }
     try {
-      const response = await axios.post('http://localhost:8000/auth/change-password', data);
+      const response = await axios.post('https://smartapartmentserver.onrender.com/auth/change-password', data);
 
       if (response.status === 200) {
         console.log('Password changed successfully');
@@ -105,7 +105,7 @@ const ServiceProvider = () => {
 
       try {
         let data={image:selectedImageFile}
-        const response = await axios.post('http://localhost:8000/users/upload-image', data);
+        const response = await axios.post('https://smartapartmentserver.onrender.com/users/upload-image', data);
         console.log('Image uploaded successfully:', response.data);
         setProfileImage(selectedImageFile);
         setOpenImageUploadModal(false);

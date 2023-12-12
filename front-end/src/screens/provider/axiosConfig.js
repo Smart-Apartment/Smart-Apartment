@@ -13,7 +13,7 @@ api.interceptors.request.use(
 
       if (isTokenExpired) {
         try {
-          const response = await axios.post('http://127.0.0.1:8000/auth/refresh', {}, { withCredentials: true });
+          const response = await axios.post('https://smartapartmentserver.onrender.com/auth/refresh', {}, { withCredentials: true });
 
           if (response.status === 200) {
             const newToken = response.data.access_token;

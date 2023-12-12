@@ -35,7 +35,7 @@ const SecSideBar = () => {
     }
   }, [token]);
   const getUser=async()=>{
-    const res=await axios.get("http://localhost:8000/users/getservice");
+    const res=await axios.get("https://smartapartmentserver.onrender.com/users/getservice");
     setUser(res.data);
     console.log(res);
   }

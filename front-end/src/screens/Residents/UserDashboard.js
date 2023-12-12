@@ -194,7 +194,7 @@ const UserDashBoard = () => {
     const fetchMembers = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/users/getmembercount`
+          `https://smartapartmentserver.onrender.com/users/getmembercount`
         );
         console.log(response);
         let newState = [...mainData];
