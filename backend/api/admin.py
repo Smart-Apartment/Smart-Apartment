@@ -97,8 +97,7 @@ def remove(user_name : str):
 @router.get("/getComplaints", response_model=List[Complaints])
 async def get_appointments():
     appointments = complaints_collection.find({},{"_id":0})
-    print(appointments)
-    return [Complaints(**appointment) for appointment in appointments]
+    return list(Complaints(**appointment) for appointment in appointments),200
 
 
     
