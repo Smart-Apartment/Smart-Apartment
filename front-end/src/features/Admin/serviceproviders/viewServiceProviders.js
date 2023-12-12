@@ -1,7 +1,6 @@
 import { withStyles } from "@material-ui/styles";
 import styles from "../Users/style";
 import Keys from "./keys";
-import UserData from "../temp/users";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
