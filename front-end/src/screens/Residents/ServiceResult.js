@@ -51,7 +51,7 @@ const BookingCard = (props) => {
   const handleComplete1 = async (newData) => {
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/complaints/appointments/completed/`,
+        `https://smartapartmentserver.onrender.com/complaints/appointments/completed/`,
         {
           ...newData,
           status: "Completed",
@@ -83,7 +83,7 @@ const BookingCard = (props) => {
         year:new Date().getFullYear()
       }
       console.log(data);
-      await axios.post(`http://127.0.0.1:8000/complaints/appointments/completed`,data);
+      await axios.post(`https://smartapartmentserver.onrender.com/complaints/appointments/completed`,data);
       setConfirmSnackbarOpen(true);
       props.fetchAllAppointments();
       
@@ -318,7 +318,7 @@ function ServiceResult() {
   const fetchAllAppointments = async () => {
     try {
       const response = await axios.get(
-        'http://127.0.0.1:8000/complaints/user/appointments'
+        'https://smartapartmentserver.onrender.com/complaints/user/appointments'
       );
       const allAppointments = response.data;
       console.log(allAppointments);

@@ -60,7 +60,7 @@ const VisitorTable = () => {
     const fetchData = async () => {
       try {
        
-        const response = await axios.get("http://localhost:8000/visitor/getvisitors");
+        const response = await axios.get("https://smartapartmentserver.onrender.com/visitor/getvisitors");
         
         console.log(response.data);
         setVisitorData(response.data);

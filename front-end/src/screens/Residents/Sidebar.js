@@ -32,7 +32,7 @@ const Sidebar = () => {
     }
   }, [token,image]);
   const getUser=async()=>{
-    const res=await axios.get("http://localhost:8000/users/getuser");
+    const res=await axios.get("https://smartapartmentserver.onrender.com/users/getuser");
     setUser(res.data);
     console.log(res);
   }  

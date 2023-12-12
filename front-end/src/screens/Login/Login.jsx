@@ -112,7 +112,7 @@ function LoginForm(props) {
     form.append("password",data.password)
     try {
       setLoading(true);
-      const response = await axios.post("http://127.0.0.1:8000/auth/login", form);
+      const response = await axios.post("https://smartapartmentserver.onrender.com/auth/login", form);
       if(response){
         console.log(response);
       setAuth(true);

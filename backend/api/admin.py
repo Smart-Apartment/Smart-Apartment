@@ -184,7 +184,7 @@ async def main():
     else:
         return 404
 
-@router.get("/admin/userSearch/{query}")
+@router.get("/userSearch/{query}")
 async def search_items(query: str):
     regex_query = {"user_name": {"$regex": f".*{query}.*", "$options": "i"}}
 
@@ -192,7 +192,7 @@ async def search_items(query: str):
     
     return list(results),200
 
-@router.get("/admin/serviceSearch/{query}")
+@router.get("/serviceSearch/{query}")
 async def search_items(query: str):
     regex_query = {"first_name": {"$regex": f".*{query}.*", "$options": "i"}}
 

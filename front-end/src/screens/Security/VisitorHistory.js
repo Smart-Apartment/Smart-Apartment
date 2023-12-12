@@ -77,7 +77,7 @@ const VisitorHistory = () => {
     const fetchData = async () => {
       try {
        console.log(token);
-        const response = await axios.get("http://localhost:8000/visitor/allvisitors");
+        const response = await axios.get("https://smartapartmentserver.onrender.com/visitor/allvisitors");
         
         console.log(response);
         setVisitorData(response.data);
@@ -140,7 +140,7 @@ const VisitorHistory = () => {
       };
       console.log(checkOutData);
       const response = await axios.post(
-        'http://127.0.0.1:8000/visitor/check-out',
+        'https://smartapartmentserver.onrender.com/visitor/check-out',
         checkOutData
       );
 

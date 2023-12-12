@@ -206,7 +206,7 @@ export default function VisitorManagementSystem() {
     try {
   
       
-      const response = await axios.post('http://127.0.0.1:8000/users/auto-check-in',data); 
+      const response = await axios.post('https://smartapartmentserver.onrender.com/users/auto-check-in',data); 
   
       if (response.status===200) {
         const responseData = await response.data;
@@ -233,7 +233,7 @@ export default function VisitorManagementSystem() {
         ...visitorDetails,
       };
   
-      const response = await axios.post('http://127.0.0.1:8000/visitor/check-in',checkInData); 
+      const response = await axios.post('https://smartapartmentserver.onrender.com/visitor/check-in',checkInData); 
   
       if (response.status===200) {
         const responseData = await response.data;
@@ -263,7 +263,7 @@ export default function VisitorManagementSystem() {
         ...visitorDetails,
       };
   
-      const response = await axios.post('http://127.0.0.1:8000/visitor/check-out',checkOutData); 
+      const response = await axios.post('https://smartapartmentserver.onrender.com/visitor/check-out',checkOutData); 
   
       if (response.status===200) {
         const responseData = await response.data;

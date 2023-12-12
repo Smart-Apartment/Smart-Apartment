@@ -60,7 +60,7 @@ const Profile = () => {
 
   const getUser=async()=>{
     if(token){
-    const res= await axios.get("http://localhost:8000/users/getuser").then((res)=>{
+    const res= await axios.get("https://smartapartmentserver.onrender.com/users/getuser").then((res)=>{
       setUser(res.data);
       console.log(res);
     });
@@ -92,7 +92,7 @@ const Profile = () => {
 
       try {
         let data={image:selectedImageFile}
-        const response = await axios.post('http://localhost:8000/users/upload-image', data);
+        const response = await axios.post('https://smartapartmentserver.onrender.com/users/upload-image', data);
         console.log('Image uploaded successfully:', response.data);
         setProfileImage(selectedImageFile);
         setOpenImageUploadModal(false);
@@ -173,7 +173,7 @@ const Profile = () => {
   const handleSubmitAddMember = () => {
     let formData = {  member: familyMembers };
     axios({
-      url: "http://127.0.0.1:8000/family/addfamily",
+      url: "https://smartapartmentserver.onrender.com/family/addfamily",
       method: "POST",
 
       data: formData,
@@ -193,7 +193,7 @@ const Profile = () => {
       if(token){
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/family/getfamily`
+          `https://smartapartmentserver.onrender.com/family/getfamily`
         );
         setShowFamily(response.data["family_members"]);
         console.log(response);
@@ -211,7 +211,7 @@ const Profile = () => {
     console.log(newData);
     try {
       axios
-        .post(`http://127.0.0.1:8000/family/removemember`, {
+        .post(`https://smartapartmentserver.onrender.com/family/removemember`, {
           member: newData,
         })
         .then((res) => {

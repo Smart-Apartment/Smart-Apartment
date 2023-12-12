@@ -496,7 +496,7 @@ const handleNext = async (data) => {
     console.log(formData)
 
     try {
-      const response = await axios.post('http://localhost:8000/auth/register', formData);
+      const response = await axios.post('https://smartapartmentserver.onrender.com/auth/register', formData);
 
 
       if (response && response.data && response.status===200) {

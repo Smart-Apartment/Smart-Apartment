@@ -122,7 +122,7 @@ const Bookings = () => {
 
   const fetchPendingAppointments = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/complaints/appointments');
+      const response = await axios.get('https://smartapartmentserver.onrender.com/complaints/appointments');
       let pendingAppointments1 = response.data.filter(appointment => appointment.status === 'Pending');
 
       pendingAppointments1 = pendingAppointments1.sort((a, b) => {
@@ -140,10 +140,10 @@ const Bookings = () => {
   const handleAccept = async (appointmentId) => {
     console.log(appointmentId);
     try{
-      const response = await axios.get(`http://127.0.0.1:8000/complaints/appointments/${appointmentId}`);
+      const response = await axios.get(`https://smartapartmentserver.onrender.com/complaints/appointments/${appointmentId}`);
       const newAppointment = response.data;
   
-      const acceptedAppointmentsResponse = await axios.get('http://127.0.0.1:8000/complaints/appointments');
+      const acceptedAppointmentsResponse = await axios.get('https://smartapartmentserver.onrender.com/complaints/appointments');
       const acceptedAppointments = acceptedAppointmentsResponse.data.filter(appointment => appointment.status === 'Accepted');
   
       const appointmentsWithSameDate = acceptedAppointments.filter(appointment => {
@@ -166,7 +166,7 @@ const Bookings = () => {
 
       if (appointmentsWithSameDate.length < 2) {
         console.log(appointmentId);
-        await axios.put(`http://127.0.0.1:8000/complaints/appointments/accept/${appointmentId}`);
+        await axios.put(`https://smartapartmentserver.onrender.com/complaints/appointments/accept/${appointmentId}`);
         setMessage("Appointment Accepted")
         setAcceptSnackbarOpen(true);
         fetchPendingAppointments();
@@ -189,7 +189,7 @@ const Bookings = () => {
 
   const handleDecline = async (appointmentId) => {
     try {
-      await axios.put(`http://127.0.0.1:8000/complaints/appointments/decline/${appointmentId}`);
+      await axios.put(`https://smartapartmentserver.onrender.com/complaints/appointments/decline/${appointmentId}`);
       setMessage("Appointment Declined")
       setDeclineSnackbarOpen(true);
       fetchPendingAppointments();
