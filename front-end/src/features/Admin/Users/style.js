@@ -4,7 +4,7 @@ const style = {
     width: "80%",
     "@media(max-width:700px)": {
       width: "100%",
-      marginTop: "12%",
+      // marginTop: "12%",
     },
   },
   nav: {

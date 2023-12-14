@@ -25,7 +25,6 @@ const style = {
     display: "flex",
     alignItems: "center",
     gap: "20px",
-    
     flexDirection: "column",
     backgroundColor: "rgba(0,0,0,0.7)",
     "@media(max-width:1100px)": {
@@ -36,7 +35,9 @@ const style = {
     },
     "@media(max-width:700px)": {
       width: "80%",
+      position: "absolute",
       backgroundColor: "#000",
+      zIndex: "100",
     },
   },
   menuItems: {

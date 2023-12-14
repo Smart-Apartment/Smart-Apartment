@@ -16,7 +16,6 @@ const style = {
     userSelect: "none",
     "@media(max-width:700px)": {
       flexDirection: "column",
-      gap: "1%",
     },
   },
   smallDashParent: {

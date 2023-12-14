@@ -44,6 +44,7 @@ function View(props) {
         `https://smartapartmentserver.onrender.com/admin/getInvoiceData/${new Date().getFullYear()}`
       )
       .then((res) => {
+        console.log(res.data[0]);
         setInvoice(res.data[0]);
       });
     await axios
