@@ -66,7 +66,7 @@ const styles = {
       width: "30%",
     },
     "@media(max-width:600px)": {
-      width: "46%",
+      width: "50%",
     },
     "@media(max-width:1300px)": {
       width: "31%",
