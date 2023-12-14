@@ -4,9 +4,9 @@ const styles = {
     width: "80%",
     "@media(max-width:700px)": {
       width: "100%",
-      marginTop: (active) => {
-        return active !== 1 ? "12%" : 0;
-      },
+      // marginTop: (active) => {
+      //   return active !== 1 ? "12%" : 0;
+      // },
     },
     display: "flex",
     flexDirection: "column",
